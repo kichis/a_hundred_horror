@@ -6,3 +6,7 @@
  
  ## achieved
  - DB接続に関わる関数のみgitignoreした。
+
+
+ ## learned
+ - closure = 無名関数を表すためのクラス

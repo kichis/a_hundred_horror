@@ -1,5 +1,3 @@
-<!-- あとはスタイル -->
-
 <!DOCTYPE html>
 <html lang="ja">
 <body>

@@ -1,5 +1,4 @@
 <?php 
-// テスト
 
 
 session_start();

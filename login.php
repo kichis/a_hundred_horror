@@ -1,5 +1,7 @@
+<!-- スタイルは後で -->
 <?php 
 session_start();
+require("db_connection.php");
 include("funcs.php");
 ?>
 
@@ -8,53 +10,56 @@ include("funcs.php");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- スタイルは後で -->
     <link rel="stylesheet" href="css/style.css">
     <!-- base font -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500&display=swap" rel="stylesheet">
     <!-- specific font -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&display=swap" rel="stylesheet">
-    <!-- CSS only -->
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> 
-    <title>あなたと百物語　｜　ログイン</title>
+    <title>あなたと百物語 ｜ ログイン</title>
 
 </head>
 
 <body class="body">
     <?php 
-    if($_SESSION["user_status"]==1){
-        include("menu_user.php");
-    }else if($_SESSION["user_status"]==2){
-        include("menu_admin.php");
-    }else if($_SESSION["user_status"]==3){
-        include("menu_ban.php");
-    }else{   //session: 0/なし
-        include("menu_visit.php");
-    }
+    $menu = function (){
+        switch($_SESSION["user_status"]){
+            case 1:
+                return "menu_user.php";
+            case 2:
+                return "menu_admin.php";
+            case 3:
+                return "menu_ban.php";
+            default:
+                return "menu_visit.php";
+        }
+    };
+    include($menu());
     ?>
 
     <div id="mainImage">
-        <div id="login_1">
-            <form method="post" action="login_act.php">
-                <div class="jumbotron mx-auto pb-3">
+        <div id="login_1" class="mx-auto">
+            <form method="post" action="login_act.php" class="">
+                <div class="jumbotron pb-3">
                     <h3 class="mb-4">「語り手」ログイン</h3>
 
-                    <p>Email：<input type="email" name="email" class="form-control"></p>
-                    <p>パスワード：<input type="password" name="passw" class="form-control"></p>
-
-                <button type="submit" class="btn btn-lg btn-secondary" name='action' value='send'>入る</button>
-                <a href="signin.php" style="color: blue"><b>「語り手」アカウントを作成</b></a>
-                <p class="mt-5">（あなたの体験を語るには「語り手」への登録が必要です）</p>
-                </div>
-                
+                    <p>Email<input type="email" name="email" class="form-control"></p>
+                    <p>パスワード<input type="password" name="passw" class="form-control"></p>
+                    <div class="d-flex justify-content-between">
+                        <a href="signin.php" style="color: blue"><b>「語り手」アカウントを作成</b></a>
+                        <button type="submit" class="btn btn-lg btn-secondary" name='action' value='send'>入る</button>
+                    </div>
+                    <p class="mt-5">（あなたの体験を語るには「語り手」への登録が必要です）</p>
+                </div>          
             </form>
-        
         </div>
     </div>
 
-<!-- copyright -->
+    <!-- copyright -->
     <?php include("copyright.php"); ?>
-
-
 
 <!-- JS, Popper.js, and jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

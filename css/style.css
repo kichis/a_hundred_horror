@@ -1,7 +1,9 @@
+/* サワラビゴシックが効いているのかどうか？ */
+
 .body{
     width: 100%;
-    height:2000px;
     font-family: 'Noto Serif JP', serif;
+     /* height:2000px; */
     /* ^効果がない */
     color: rgba(255, 255, 255, 0.76);
     background-color: black;
@@ -55,18 +57,13 @@ nav a:hover{
     margin-left: 50px;
 }
 
-/* menu_visit */
-#login{
-    margin-right: 15px;
-}
-
+/* ok */
+/* menu_visit */ 
 #login a{
     font-family: 'Sawarabi Gothic', sans-serif; 
 }
 
-#login:hover{
-    color: whitesmoke;
-}
+
 
 /* home */
 #storyArea{
@@ -101,30 +98,24 @@ nav a:hover{
 }
 
 #copyright{
-    height: 200px;
-    text-align: end;
+    /* height: 200px; */
+    /* text-align: end; */
     opacity: 0.3;
-    padding-top: 100px;
+    /* padding-top: 100px; */
 }
 
 /* login.php */
-#mainImage #login_1{
-    /* position: absolute; */
-    /* top: 250px; */
-    /* left: 330px; */
+#login_1{
     width: 500px;
     padding-top: 100px;
-    margin-left: auto;
-    margin-right: auto;
 }
-
 #login_1 form{
-    background-color:gray;
-    opacity:0.5;
+    /* background-color:gray; */
+    /* opacity:0.5; */
 }
 #login_1 div{
-    z-index: 10;
-    color: black;
+    /* z-index: 10;
+    color: black; */
 }
 
 /* signin.php */

@@ -1,48 +1,42 @@
+<!-- デザイン -->
+<!-- 入室するを真ん中にする？？（現状、少しずれている） -->
+
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <!-- logout font -->
-    <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Gothic&display=swap" rel="stylesheet">
-    <!-- login icon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
-    <!-- CSS only -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> 
-    <title>あなたと百物語</title>
-
-    <style>
-        div a{
-            float:right;
-        }
-    </style>
-
-</head>
 
 <body>
     <nav class="navbar navbar-expand-lg">
-        <a href="home.php" class="m-3 mr-5"><h1>あなたと百物語</h1></a>
+        <a href="home.php" class="m-3"><h1>あなたと百物語</h1></a>
 
         <div class="collapse navbar-collapse">
-            <ul class="navbar-nav">
-                
-            </ul>
+            <ul class="navbar-nav"></ul>
         </div>
 
-
-        <div id="login">
-            <a href="login.php" class="text-secondary"><b>入る</b> <i class="fas fa-menorah fa-lg"></i></a>
-        </div>
-        
+        <div id="login" class="mr-4">
+            <a href="login.php" style="color:gray">
+                <b id="login_text">入室する</b>
+                <img src="img/icon_candle.png" id="login_icon" alt="candle" width="40">
+            </a>
+        </div>       
     </nav>
 
-
-
-    <!-- JS, Popper.js, and jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script>
+    var login = document.querySelector('#login');
+    var loginText = document.querySelector('#login_text');
+    var loginIcon = document.querySelector('#login_icon');
+    
+    function colorChange(color, image){
+        loginText.style.color = color
+        loginIcon.src = image
+    }
+    
+    login.addEventListener("mouseover", function (event) {
+        colorChange("red", "img/icon_candle_red.png")
+    }, false);
+    login.addEventListener("mouseout", function (event) {
+        colorChange("gray", "img/icon_candle.png")
+    }, false);
+</script>
 
 </body>
 </html>

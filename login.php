@@ -12,14 +12,16 @@ include("funcs.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- スタイルは後で -->
-    <link rel="stylesheet" href="css/style.css">
     <!-- base font -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500&display=swap" rel="stylesheet">
     <!-- specific font -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&display=swap" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&display=swap" rel="stylesheet"> -->
+    
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> 
-    <title>あなたと百物語 ｜ ログイン</title>
+    <link rel="stylesheet" href="css/style.css">
+
+<title>あなたと百物語 ｜ ログイン</title>
 
 </head>
 
@@ -41,8 +43,8 @@ include("funcs.php");
     ?>
 
     <div id="mainImage">
-        <div id="login_1" class="mx-auto">
-            <form method="post" action="login_act.php" class="">
+        <div id="login_1" class="text-dark mx-auto">
+            <form method="post" action="login_act.php">
                 <div class="jumbotron pb-3">
                     <h3 class="mb-4">「語り手」ログイン</h3>
 

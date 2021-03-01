@@ -47,10 +47,9 @@ include("funcs.php");
             <form method="post" action="login_act.php">
                 <div class="jumbotron pb-3">
                     <h3 class="mb-4">「語り手」ログイン</h3>
-
                     <p>Email<input type="email" name="email" class="form-control"></p>
                     <p>パスワード<input type="password" name="passw" class="form-control"></p>
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between mt-4">
                         <a href="signin.php" style="color: blue"><b>「語り手」アカウントを作成</b></a>
                         <button type="submit" class="btn btn-lg btn-secondary" name='action' value='send'>入る</button>
                     </div>

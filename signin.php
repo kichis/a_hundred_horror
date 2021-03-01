@@ -1,3 +1,4 @@
+<!-- デザインはあとで -->
 <?php 
 session_start();
 include("funcs.php");
@@ -8,52 +9,54 @@ include("funcs.php");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+
+<!-- デザインはあとで -->
     <!-- base font -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500&display=swap" rel="stylesheet">
     <!-- specific font -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&display=swap" rel="stylesheet">
-    <!-- CSS only -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&display=swap" rel="stylesheet"> -->
+
+    <!-- Bootstrap only -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> 
-    <title>あなたと百物語　｜　語り手登録</title>
+    <link rel="stylesheet" href="css/style.css">
+    <title>あなたと百物語 ｜語り手登録</title>
 
 </head>
 
 <body class="body">
     <?php 
-    if($_SESSION["user_status"]==1){
-        include("menu_user.php");
-    }else if($_SESSION["user_status"]==2){
-        include("menu_admin.php");
-    }else if($_SESSION["user_status"]==3){
-        include("menu_ban.php");
-    }else{   //session: 0/なし
-        include("menu_visit.php");
-    }
+    $menu = function (){
+        switch($_SESSION["user_status"]){
+            case 1:
+                return "menu_user.php";
+            case 2:
+                return "menu_admin.php";
+            case 3:
+                return "menu_ban.php";
+            default:
+                return "menu_visit.php";
+        }
+    };
+    include($menu());
     ?>
 
     <div id="mainImage">
-        <div id="signin_1">
+        <div id="signin_1" class="text-dark mx-auto">
             <form method="post" action="signin_act.php">
-                <div class="jumbotron mx-auto pb-3">
-            
-                <h3 class="mb-4">「語り手」アカウント作成</h3>
-
-                <p>お名前：<input type="text" name="uname" class="form-control"></p>
-                <p>Email：<input type="email" name="email" class="form-control"></p>
-                <p>パスワード：<input type="password" name="passw" class="form-control"></p>
-
-                <button type="submit" class="btn btn-lg btn-secondary" name='action' value='send'>登録</button>
-                
+                <div class="jumbotron pb-4">
+                    <h3 class="mb-4">「語り手」アカウント作成</h3>
+                    <p>お名前<input type="text" name="uname" class="form-control"></p>
+                    <p>Email<input type="email" name="email" class="form-control"></p>
+                    <p>パスワード<input type="password" name="passw" class="form-control"></p>
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-lg btn-secondary mt-3" name='action' value='send'>登録</button>           
+                    </div>
                 </div>
             </form>
         </div>      
     </div>
 
-<!-- copyright -->
     <?php include("copyright.php"); ?>
-
-
 
 <!-- JS, Popper.js, and jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

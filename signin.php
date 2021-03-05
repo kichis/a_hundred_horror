@@ -1,94 +1,63 @@
 <!-- デザインはあとで -->
 
 <?php 
+ini_set('display_errors', 1);
+
 session_start();
 require("db_connection.php");
 include("funcs.php");
 
-// フォームに入力した値のバリデーション
+
+// 以下、フォームに入力した値のバリデーション
 
 $uname = $_POST["uname"];
 $email = $_POST["email"];
 $confemail = $_POST["confirmEmail"];
 $passw = $_POST["passw"];
+$infos = [
+    'お名前' => $uname,
+    'Email' => $email,
+    '確認用Email' => $confemail,
+    'パスワード' => $passw
+];
+// バリデーションを1つ通過するごとに+1する。全バリデーション通過 = 14
+$valiFlg = 0;
+$_SESSION["signinErrorMsg"] = '';
 
-// フォームへの入力があるかチェックする
-function isFilled($data){
-    if(empty($data)){
-        // カラの時の処理
-        echo "empty data";
-    }else{
-        return $data;
+// 関数実行
+if(isset($uname)){
+    foreach($infos as $key => $value){
+        $valiFlg = isFilled($key, $value, $valiFlg); // 4
+        // echo $key . "のブランクis" .$valiFlg;
+        $valiFlg = checkInputLength($key, $value, $valiFlg); // 4
     }
+    $valiFlg = checkCorrectEmail($email, $confemail, $valiFlg); // 1
+    
+    // dbへ接続
+    $pdo = db_conn();
+    $valiFlg = checkSameRecord($pdo, 'user_name', $uname, 'このお名前は使用できません(すでに登録があります)', $valiFlg); // 1
+    $valiFlg = checkSameRecord($pdo, 'email', $email, 'このEmailは使用できません(すでに登録があります)', $valiFlg); // 1
+    
+    // ユーザ名：英数字・記号・ひらがな・カタカナ・漢字ok(日本語は常用しないものは正規表現に含めず)
+    $valiFlg = checkMatchPattern('/^[ぁ-ゔァ-ヶ一-龠々・ーゞ＝0-9a-zA-Z\/\-\'".!#$%&*+=?^_`{|}~@(),:[\]]+$/u', $uname, 'お名前', $valiFlg); // 1
+    // Email:半角英数・記号(RFC822に準拠)に限る(注：正規表現中の\はエスケープ用であって、規定外の記号である)
+    // HACK: checkCorrectEmail()でバリデーションできていると思われるが、FILTER_VALIDATE_EMAILの範囲が不明瞭なので保険としてここでもバリデーションする
+    $valiFlg = checkMatchPattern("/^([\/\-0-9a-zA-Z.!#$%&'*+=?^_`{|}~@])+$/", $email, 'Email', $valiFlg); // 1
+    // password:半角英数に限る(大文字・小文字区別)、記号不可
+    $valiFlg = checkMatchPattern('/^[0-9a-zA-Z]+$/', $passw, 'パスワード', $valiFlg); // 1
 }
-isFilled($uname);
-isFilled($email);
-isFilled($confemail);
-isFilled($passw);
 
-// 文字数制限内かチェックする
-function checkInputLength($data, $limit){
-    if(mb_strlen($data) > $limit){
-        // 文字数オーバーのときの処理
-        echo "over size";
-    }else{
-        return $data;
-    }
+if($valiFlg == 14){
+    echo "入力完璧！";
 }
-checkInputLength($uname, 100);
-checkInputLength($email, 255);
-checkInputLength($confemail, 255);
-checkInputLength($passw, 255);
+// 入力情報を$_SEDDION変数に入れる
+// signin_actに送って登録する
 
-// メールアドレスは正しい形式化？半角英数・記号に限る、@必要、＠以降に文字列必要
-$em = "l'l.!#$%&*+-/=?^_{|}~l@tk.com";
-// ドットなしドメイン名 (dotless domain name)-> false
-// @の前に何もない->f
-// 全角の入力->f
-// 空白の入力->f
-checkCorrectEmail($em);
-function checkCorrectEmail($data){
-    if(!filter_var($data, FILTER_VALIDATE_EMAIL)){
-        echo '正しいEメールアドレスを指定してください。';
-    }else{
-        echo "ok";
-    }
-}
-    // Emailが確認用Emailの入力と合っているか
-// if($email != $confemail){
-//   $_SESSION["signinErrorMsg"] .= "２つのEmailの入力が異なっています<br>";
-//   redirect("signin.php");
-// }
-
-// // uname重複check
-// // 同じユーザ名の登録があるか
-// $sql = "SELECT user_name from users WHERE email=:email";
-// $stmt = $pdo->prepare($sql);
-// $stmt->bindValue(':email', $email, PDO::PARAM_STR);
-// $val = $stmt->fetch();
-// if($val["email"] == $email){
-//   $_SESSION["signinErrorCode"] += "このEmailアドレスは使用できません(すでに登録があります)<br>";
-// }
-// // email重複check
-// // 同じEmailの登録があるか
-// $sql = "SELECT email from users WHERE email=:email";
-// $stmt = $pdo->prepare($sql);
-// $stmt->bindValue(':email', $email, PDO::PARAM_STR);
-// $val = $stmt->fetch();
-// if($val["email"] == $email){
-//   $_SESSION["signinErrorCode"] += "このEmailアドレスは使用できません(すでに登録があります)<br>";
-// }
-
-// 適切な形に
-// ユーザ名：英数字・記号・ひらがな・カタカナ・漢字ok
-// アドレス：半角英数・記号に限る
-// pass：半角英数に限る(大文字・小文字区別)、記号不可 
-// ユーザー入力データから不要な文字（余分なスペース、タブ、改行）を取り除く（PHPのtrim()関数を使用）
-// ユーザ入力データからバックスラッシュ（\）を削除する（PHPのstripslashes()関数を使用）
-
-
-
-// 適切化はHTMLタグもいじる
+// $uname = "";
+// $email = "";
+// $confemail = "";
+// $passw = "";
+// $infos = "";
 ?>
 
 
@@ -133,25 +102,15 @@ function checkCorrectEmail($data){
             <form method="post" action="signin.php">
                 <div class="jumbotron pb-4">
                     <h3 class="mb-4">「語り手」アカウント作成</h3>
-                    <!-- 100文字以下、英数字・記号・ひらがな・カタカナ・漢字ok -->
-                    <p>お名前<small class="ml-3">ユーザー名として表示されます。100文字以下</small><input type="text" name="uname" maxlength='100' class="form-control"></p>
-                    <!-- 255文字以下、半角英数・記号に限る、@必要、＠以降に文字列必要 -->
-                    <p>Email<input type="email" name="email" maxlength='255' class="form-control"></p>
-                    <p>Email(確認用)<input type="email" name="confirmEmail" maxlength='255' class="form-control"></p>
-                    <!-- 255文字以下、半角英数に限る(大文字・小文字区別)、記号不可 -->
-                    <p>パスワード<small class="ml-3">半角英数字のみ(※大文字と小文字は区別されます)</small><input type="password" name="passw" maxlength='255' class="form-control"></p>
+                    <!-- 3文字以上、100文字以下、英数字・記号・ひらがな・カタカナ・漢字ok -->
+                    <p>お名前<small class="ml-3">ユーザー名として表示されます。3文字以上、100文字以下</small><input type="text" name="uname" maxlength='100' minlength='3' placeholder='おばけちゃん' class="form-control" required value="<?=$uname?>"></p>
+                    <!-- 3文字以上、255文字以下、半角英数・記号に限る、@必要、＠以降に文字列必要 -->
+                    <p>Email<input type="email" name="email" maxlength='255' minlength='3' placeholder='obake@ghost.com' class="form-control" required value="<?=$email?>"></p>
+                    <p>Email(確認用)<input type="email" name="confirmEmail" maxlength='255' minlength='3' placeholder='obake@ghost.com' class="form-control" required value="<?=$confemail?>"></p>
+                    <!-- 8文字以上、255文字以下、半角英数に限る(大文字・小文字区別)、記号不可 -->
+                    <p>パスワード<small class="ml-3">半角英数字のみ、8文字以上</small><input type="password" name="passw" maxlength='255' minlength='8' class="form-control" required value="<?=$passw?>"></p>
                     <p id="errorMsg" class="text-danger">
-                        <?php 
-                        echo $_SESSION["signinErrorMsg"];
-                        // switch($_SESSION["signinErrorCode"]){
-                        //     case "1":
-                        //         echo "２つのEmailの入力が異なっています";
-                        //         continue;
-                        //     default:
-                        //         // echo "なぞのエラー！";
-                        // }
-                        // $_SESSION["signinErrorMsg"] = "";
-                        ?>
+                        <?= $_SESSION["signinErrorMsg"];?>
                     </p>
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-lg btn-secondary mt-3" name='action' value='send'>登録</button>           

@@ -63,20 +63,17 @@ nav a:hover{
     font-family: 'Sawarabi Gothic', sans-serif; 
 }
 
-
-
+/* ok */
 /* home */
 #storyArea{
     width: 700px;
     height: 1000px;
     background-image: url(../img/hand.jpeg);
     position: relative;
-    margin-top: 30px;
-    margin-left: auto; 
-    margin-right: auto;
+    /* margin-top: 30px; */
 }
 
-.under{
+#under{
     width: 100%;
     height: 1000px;
     background-color: black;
@@ -84,16 +81,15 @@ nav a:hover{
     position: absolute;
 }
 
-#storyArea .over{
+#over{
     width: 600px;
-    height: auto;
     color: whitesmoke;
     position: absolute;
-    margin: 20px auto auto 50px;
-
+    margin: 50px auto auto 50px;
+    /* height: auto; */
 }
 
-.over p{
+#over p{
     font-family: 'Sawarabi Gothic', sans-serif;
 }
 
@@ -102,6 +98,7 @@ nav a:hover{
 #copyright{
     text-align: end;
     opacity: 0.3;
+    margin-top: 100px;
 }
 
 /* ok */

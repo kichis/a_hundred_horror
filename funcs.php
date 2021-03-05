@@ -67,7 +67,7 @@ if($status==false) {
 }
 }
 
-// signin用バリデーション
+// 以下、signin用バリデーション
 
 // 空欄ではないか
 function isFilled($key, $value, $valiFlg){
@@ -104,7 +104,7 @@ function checkInputLength($key, $value, $valiFlg){
     if(mb_strlen($value) > $max){
         $_SESSION["signinErrorMsg"] .= "{$key}を{$max}文字以下にしてください<br>";
     }else if(mb_strlen($value) < $min){
-        $_SESSION["signinErrorMsg"] .= "{$key}を{$min}文字以上にしてください<br>";
+        $_SESSION["signinErrorMsg"] .= "{$key}を{$min}文字以下にしてください<br>";
     }else{
         $valiFlg += 1;
     }

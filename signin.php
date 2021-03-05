@@ -102,13 +102,14 @@ if($valiFlg == 14){
                 <div class="jumbotron pb-4">
                     <h3 class="mb-4">「語り手」アカウント作成</h3>
                     <!-- 3文字以上、100文字以下、英数字・記号・ひらがな・カタカナ・漢字ok -->
-                    <p>お名前<small class="ml-3">ユーザー名として表示されます。3文字以上、100文字以下</small><input type="text" name="uname" maxlength='100' minlength='3' placeholder='おばけちゃん' class="form-control" required value="<?=$uname?>"></p>
+                    <p>お名前<small class="ml-3">ユーザー名として表示されます。3文字以上、100文字以下</small><input type="text" name="uname" maxlength='100' minlength='3' placeholder='おばけちゃん' class="form-control" required value="<?= h($uname)?>"></p>
                     <!-- 3文字以上、255文字以下、半角英数・記号に限る、@必要、＠以降に文字列必要 -->
-                    <p>Email<input type="email" name="email" maxlength='255' minlength='3' placeholder='obake@ghost.com' class="form-control" required value="<?=$email?>"></p>
-                    <p>Email(確認用)<input type="email" name="confirmEmail" maxlength='255' minlength='3' placeholder='obake@ghost.com' class="form-control" required value="<?=$confemail?>"></p>
+                    <p>Email<input type="email" name="email" maxlength='255' minlength='3' placeholder='obake@ghost.com' class="form-control" required value="<?= h($email)?>"></p>
+                    <p>Email(確認用)<input type="email" name="confirmEmail" maxlength='255' minlength='3' placeholder='obake@ghost.com' class="form-control" required value="<?=h($confemail)?>"></p>
                     <!-- 8文字以上、255文字以下、半角英数に限る(大文字・小文字区別)、記号不可 -->
-                    <p>パスワード<small class="ml-3">半角英数字のみ、8文字以上</small><input type="password" name="passw" maxlength='255' minlength='8' class="form-control" required value="<?=$passw?>"></p>
+                    <p>パスワード<small class="ml-3">半角英数字のみ、8文字以上</small><input type="password" name="passw" maxlength='255' minlength='8' class="form-control" required value="<?= h($passw)?>"></p>
                     <p id="errorMsg" class="text-danger">
+                        <!-- ユーザ入力文字列は含まないのでh()しない -->
                         <?= $_SESSION["signinErrorMsg"];?>
                     </p>
                     <div class="d-flex justify-content-end">

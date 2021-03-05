@@ -1,31 +1,22 @@
 <!-- デザインはあとで -->
 
 <?php 
+// ini_set('display_errors', 1);
+
 session_start();
 require("db_connection.php");
 include("funcs.php");
 
 // dbへ接続
 $pdo = db_conn();
+
 // 語り情報取得（新しい順に表示）
-
-$sql = "SELECT stories.story_id AS id, stories.title AS title, users.user_name AS user, stories.date AS date 
+$sql = "SELECT stories.story_id AS id, stories.title AS title, users.user_name AS user, stories.user_id AS user_id, stories.date AS `date`, stories.num_horror AS horror 
 FROM stories INNER JOIN users ON stories.user_id = users.user_id 
-WHERE status = 1 AND `user_id` != 3 ORDER BY id DESC;";
-
-// blacklist userの投稿は反映しないこととする
-//   
-
-$sql = "SELECT * FROM stories WHERE status = 1 ORDER BY story_id DESC";
+WHERE status = 1 AND user_status != 3 ORDER BY id DESC";
 $stmt = $pdo->prepare($sql);
 $status = $stmt->execute();
-
-//語りデータ取り出し
-// $view="";
-if($status==false) {
-    sql_error();
-}else{
-}
+if($status==false) sql_error();
 
 ?>
 
@@ -47,8 +38,6 @@ if($status==false) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> 
-    
-
     <link rel="stylesheet" href="css/style.css">
     <title>あなたと百物語</title>
 </head>
@@ -79,23 +68,29 @@ if($status==false) {
     </div>
 
 
-    <div id="storyArea">
-        <div class="under"></div>
-        <div class="over">
-        <?php 
-        while($r = $stmt->fetch(PDO::FETCH_ASSOC)){
-        ?>
-            <p style="" class="mb-2">
-                <b>題：
-                    <a href="story.php?id=<?=$r["id"]?>"><?=$r["title"]?></a>
-                </b>
-            </p>
-            <!-- <p>&#160;&#160;&#160;(<?=$r["date"]?>)&#160;&#160;&#160;<i class="fas fa-ghost"></i>&#160;<?=$r["horror"];?></p> -->
-            <!-- <p style="margin-bottom:30px">語り手：<?=$r["user"]?></p> -->
-            <p style="margin-bottom:30px">語り手：<?=$r["user_id"]?></p>
-        <?php
-        }
-        ?>
+    <div id="storyArea" class="mt-5 mx-auto">
+        <div id="under"></div>
+        <div id="over">
+            <?php             
+            // var_dump($all);
+            while($r = $stmt->fetch(PDO::FETCH_ASSOC)){
+                ?>  
+                <div>
+                    <p class="d-inline-flex mr-2 mb-0">#<?=$r["id"]?></p>
+                    <p class="d-inline-flex" class="">
+                        <b>
+                            <a href="story.php?id=<?=$r["id"]?>"><?=$r["title"]?></a>
+                        </b>
+                    </p>
+                    <p class="mb-5">
+                        語り手：<?=$r["user"]?>&nbsp;/&nbsp;
+                        <i class="fas fa-ghost"></i>&nbsp;<?=$r["horror"]?>&nbsp;/&nbsp;
+                        <?=$r["date"]?>
+                    </p>
+                </div>
+            <?php
+            }
+            ?>
         </div>
     </div>
 

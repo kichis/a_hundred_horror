@@ -1,7 +1,7 @@
 <!-- デザインはあとで -->
 
 <?php 
-ini_set('display_errors', 1);
+// ini_set('display_errors', 1);
 
 session_start();
 require("db_connection.php");
@@ -20,6 +20,7 @@ $infos = [
     '確認用Email' => $confemail,
     'パスワード' => $passw
 ];
+
 // バリデーションを1つ通過するごとに+1する。全バリデーション通過 = 14
 $valiFlg = 0;
 $_SESSION["signinErrorMsg"] = '';
@@ -48,16 +49,14 @@ if(isset($uname)){
 }
 
 if($valiFlg == 14){
+    // dbへ登録する処理へ
     echo "入力完璧！";
+    $_SESSION["uname"] = $uname;
+    $_SESSION["email"] = $email;
+    $_SESSION["passw"] = $passw;
+    redirect("signin_act.php");
 }
-// 入力情報を$_SEDDION変数に入れる
-// signin_actに送って登録する
 
-// $uname = "";
-// $email = "";
-// $confemail = "";
-// $passw = "";
-// $infos = "";
 ?>
 
 

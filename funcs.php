@@ -4,19 +4,17 @@ function h($str){
     return htmlspecialchars($str, ENT_QUOTES);
 }
 
-//SessionCheck
+// ログインしたユーザならsession_idを変更する
 function ss_chg(){
- if(isset($_SESSION["chk_ssid"]) || $_SESSION["chk_ssid"]=session_id()){
-    session_regenerate_id(true); //SESSION_IDを毎ページ変える
-    $_SESSION["chk_ssid"] = session_id();
- }else{
-    
- }
+    if( isset($_SESSION["chk_ssid"]) && $_SESSION["chk_ssid"] == session_id() ){
+        session_regenerate_id(true); //SESSION_IDを毎ページ変える
+        $_SESSION["chk_ssid"] = session_id();
+    }else{
+    }
 }
 // user,admin以外禁止
 function avoid(){
     if($_SESSION["user_status"]==1 || $_SESSION["user_status"]==2){
-
     }else{
         redirect("home.php");
     }

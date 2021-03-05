@@ -156,12 +156,12 @@ nav a:hover{
 }
 
 /* story.php */
-#mainImage #story_1{
+#story_main{
     width: 70%;
-    height: auto;
     padding-top: 70px;
-    margin-left: auto;
-    margin-right: auto;
+}
+#story_content{
+    color: white;
 }
 
 #mainImage #story_2{

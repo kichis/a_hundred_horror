@@ -1,6 +1,6 @@
 <!-- デザインはあとで -->
 
-<?php 
+<?php
 // ini_set('display_errors', 1);
 
 session_start();
@@ -11,12 +11,12 @@ include("funcs.php");
 $pdo = db_conn();
 
 // 語り情報取得（新しい順に表示）
-$sql = "SELECT stories.story_id AS id, stories.title AS title, users.user_name AS user, stories.user_id AS user_id, stories.date AS `date`, stories.num_horror AS horror 
+$sql = "SELECT stories.story_id AS story_id, stories.title AS title, users.user_name AS user, stories.user_id AS user_id, stories.date AS `date`, stories.num_horror AS horror 
 FROM stories INNER JOIN users ON stories.user_id = users.user_id 
-WHERE status = 1 AND user_status != 3 ORDER BY id DESC";
+WHERE status = 1 AND user_status != 3 ORDER BY story_id DESC";
 $stmt = $pdo->prepare($sql);
 $status = $stmt->execute();
-if($status==false) sql_error();
+if($status==false) sql_error($stmt);
 
 ?>
 
@@ -76,10 +76,10 @@ if($status==false) sql_error();
             while($r = $stmt->fetch(PDO::FETCH_ASSOC)){
                 ?>  
                 <div>
-                    <p class="d-inline-flex mr-2 mb-0">#<?=$r["id"]?></p>
+                    <p class="d-inline-flex mr-2 mb-0">#<?=$r["story_id"]?></p>
                     <p class="d-inline-flex" class="">
                         <b>
-                            <a href="story.php?id=<?=$r["id"]?>"><?=$r["title"]?></a>
+                            <a href="story.php?story_id=<?=$r["story_id"]?>"><?=$r["title"]?></a>
                         </b>
                     </p>
                     <p class="mb-5">

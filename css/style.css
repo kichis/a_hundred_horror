@@ -16,6 +16,14 @@
     background-size: cover;
     background-position: center;
 }
+#mainImage_2{
+    width: 100%;
+    background-color: black;
+    background-image: url(../img/candle_2.jpg);
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: top;
+}
 
 #inst{
     padding-top: 200px;
@@ -155,10 +163,13 @@ nav a:hover{
     font-family: 'Sawarabi Gothic', sans-serif;
 }
 
+/* ok */
 /* story.php */
 #story_main{
     width: 60%;
     padding-top: 70px;
+    position: relative;
+    z-index: 10;
 }
 #story_content{
     color: white;
@@ -169,13 +180,9 @@ nav a:hover{
     opacity: 0.7;
 }
 
-#story_2{
-    width: 70%;
-    height: auto;
+#story_bottom{
+    width: 60%;
     margin-top:80px;
-    margin-left: auto;
-    margin-right: auto;
-
 }
 
 /* user_post */

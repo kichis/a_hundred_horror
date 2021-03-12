@@ -2,6 +2,7 @@
 // コメントを投稿する
 
 session_start();
+require("db_connection.php");
 include("funcs.php");
 
 ss_chg();

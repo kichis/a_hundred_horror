@@ -104,7 +104,7 @@ __git__
   1. remote master -> local master(pull)
   1. remote master -> local feature(pull)? or local master -> local feature(merge?rebase?)
 - merge : 
-- rebase :  
+- rebase :  [参考](https://www.shigemk2.com/entry/20121123/1353640913)
     - コミットログがきれいになる
     - 「マージした」という事実は失われる
     - マージに比べるとコンフリクトの解消が面倒

@@ -157,14 +157,19 @@ nav a:hover{
 
 /* story.php */
 #story_main{
-    width: 70%;
+    width: 60%;
     padding-top: 70px;
 }
 #story_content{
     color: white;
 }
+.comm_area{
+    color: black;
+    background-color: white;
+    opacity: 0.7;
+}
 
-#mainImage #story_2{
+#story_2{
     width: 70%;
     height: auto;
     margin-top:80px;

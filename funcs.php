@@ -1,8 +1,23 @@
 <?php 
-//XSS対応（ echoする場所で使用！それ以外はNG ）
+// XSS対応（ echoする場所で使用！それ以外はNG ）
 function h($str){
     return htmlspecialchars($str, ENT_QUOTES);
 }
+
+// SQLエラー
+function sql_error($stmt){
+    //execute（SQL実行時にエラーがある場合）
+    $error = $stmt->errorInfo();
+    exit("データベース内でエラーが発生しました:".$error[2]);
+}
+
+// リダイレクト
+function redirect($file_name){
+    header("Location: ".$file_name);
+    exit();
+}
+
+// 以下、アクセス権限関係 //
 
 // ログインしたユーザならsession_idを変更する
 function ss_chg(){
@@ -12,6 +27,7 @@ function ss_chg(){
     }else{
     }
 }
+
 // user(1),admin(2)以外禁止
 function avoid(){
     if($_SESSION["user_status"]==1 || $_SESSION["user_status"]==2){
@@ -23,49 +39,12 @@ function avoid(){
 // admin以外禁止
 function avoidUser(){
     if($_SESSION["user_status"]==2){
-
     }else{
         redirect("home.php");
     }
 }
 
-
-
-//SQLエラー
-function sql_error($stmt){
-    //execute（SQL実行時にエラーがある場合）
-    $error = $stmt->errorInfo();
-    exit("データベース内でエラーが発生しました:".$error[2]);
-}
-
-//リダイレクト
-function redirect($file_name){
-    header("Location: ".$file_name);
-    exit();
-}
-
-// story.phpにコメントを表示
-function showComm($id){
-    $pdo = db_conn();
-    $sql = "SELECT comments.comment AS comment, users.user_name AS user FROM comments INNER JOIN users ON comments.comm_user = users.user_id WHERE story_id = :id";
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-    $status = $stmt->execute();
-
-// レコードを変数へ
-$view="";
-if($status==false) {
-  sql_error();
-}else{
-    while($a = $stmt->fetch(PDO::FETCH_ASSOC)){
-        $view .= $a["user"]."&#160;&#160;&#160;「";
-        $view .= $a["comment"]."」<br>";
-    }
-    return $view;
-}
-}
-
-// 以下、signin用バリデーション
+// 以下、signin用バリデーション //
 
 // 空欄ではないか
 function isFilled($key, $value, $valiFlg){
@@ -150,6 +129,42 @@ function checkMatchPattern($pattern, $data, $which, $valiFlg){
         $_SESSION["signinErrorMsg"] .= $which. "に使用できない文字が含まれています<br>";
     }
     return $valiFlg;
+}
+
+// 以下、story.php
+
+// ユーザが怖ボタンを押下済みか
+function hasPushed($pdo, $story_id, $user_id){
+    $pdo = db_conn();
+    $sql = "SELECT * FROM horrors WHERE story_id = :story_id AND user_id = :user_id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':story_id', $story_id, PDO::PARAM_INT);
+    $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+    $status = $stmt->execute();
+    if($status==false) {
+        sql_error($stmt);
+    }else{
+        return $stmt->fetch();
+    }
+}
+
+// 該当ストーリーのコメントを取り出す
+function getComment($pdo, $story_id){
+    $pdo = db_conn();
+    $sql = "SELECT comments.comment AS comment, users.user_name AS user, comments.date AS date FROM comments INNER JOIN users ON comments.user_id = users.user_id WHERE story_id = :story_id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':story_id', $story_id, PDO::PARAM_INT);
+    $status = $stmt->execute();
+
+    if($status==false) {
+        sql_error($stmt);
+    }else{
+        $view = array();
+        while($data = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $view[] = $data;
+        }
+        return $view;
+    }
 }
 
 ?>

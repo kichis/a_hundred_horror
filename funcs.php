@@ -12,7 +12,7 @@ function ss_chg(){
     }else{
     }
 }
-// user,admin以外禁止
+// user(1),admin(2)以外禁止
 function avoid(){
     if($_SESSION["user_status"]==1 || $_SESSION["user_status"]==2){
     }else{

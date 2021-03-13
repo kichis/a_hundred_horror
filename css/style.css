@@ -1,5 +1,9 @@
 /* サワラビゴシックが効いているのかどうか？ */
 
+.font_sawarabi{
+    font-family: 'Sawarabi Gothic', sans-serif;
+}
+
 .body{
     width: 100%;
     font-family: 'Noto Serif JP', serif;
@@ -9,10 +13,6 @@
     background-color: black;
 }
 
-.font_sawarabi{
-    font-family: 'Sawarabi Gothic', sans-serif;
-}
-
 #mainImage{
     width: 100%;
     height: 800px;
@@ -20,20 +20,156 @@
     background-size: cover;
     background-position: center;
 }
-/* ページ内のコンテンツが長くなる可能性があるページに使うmainImage(copyrightと被ってしまうため) */
 #mainImage_2{
+    /* ページ内のコンテンツが長くなる可能性があるページに使うmainImage(copyrightと被ってしまうため) */
     width: 100%;
-    background-color: black;
     background-image: url(../img/candle_2.jpg);
     background-size: 100% auto;
     background-repeat: no-repeat;
     background-position: top;
+    background-color: black;
 }
 
+/* ok */
+/* menu_visit */ 
+#login a{
+    font-family: 'Sawarabi Gothic', sans-serif; 
+}
+
+/* ok */
+/* copyright.php */
+#copyright{
+    text-align: end;
+    opacity: 0.3;
+    margin-top: 100px;
+}
+
+/* ok */
+/* home */
 #inst{
     padding-top: 200px;
     margin-left: 140px;
 }
+
+#storyArea{
+    width: 700px;
+    height: 1000px;
+    background-image: url(../img/hand.jpeg);
+    position: relative;
+    /* margin-top: 30px; */
+}
+
+#under{
+    width: 100%;
+    height: 1000px;
+    background-color: black;
+    opacity: 0.7;
+    position: absolute;
+}
+
+#over{
+    width: 600px;
+    color: whitesmoke;
+    position: absolute;
+    margin: 50px auto auto 50px;
+    /* height: auto; */
+}
+
+#over p{
+    font-family: 'Sawarabi Gothic', sans-serif;
+}
+
+/* ok */
+/* login.php */
+#login_1{
+    width: 500px;
+    opacity:0.7;
+    padding-top: 100px;
+}
+
+/* ok */
+/* signin.php */
+#signin_1{
+    /* position: absolute; */
+    /* top: 250px; */
+    /* left: 330px; */
+    width: 500px;
+    opacity:0.7;
+    padding-top: 100px;
+    /* margin-left: auto;
+    margin-right: auto; */
+}
+
+/* ok */
+/* story.php */
+#story_main, #mystory_main{
+    width: 60%;
+    padding-top: 70px;
+}
+/* #user_edit_1 */
+
+#story_content{
+    color: white;
+}
+.comm_area{
+    color: black;
+    background-color: white;
+    opacity: 0.7;
+}
+#story_bottom{
+    width: 60%;
+    margin-top:80px;
+}
+
+/* mystory.php */
+#mystory_main h4{
+    margin-bottom: 70px;
+}
+
+#mystory_main p{
+    font-family: 'Sawarabi Gothic', sans-serif;
+}
+
+/* ok */
+/* form_story.php */
+.storyform_area{
+    width: 45%;
+    padding-top: 120px;
+}
+
+
+#signin_1 form{
+    /* background-color:gray; */
+}
+#signin_1 div{
+    /* z-index: 10;
+    color: black; */
+}
+
+/* #mainImage #gray{
+    width: 80%;
+    height: auto;
+    background-color: gray;
+    /* position: absolute; */
+    /* opacity: 0.2; */
+/* } */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #sField{
     width: 800px;
@@ -70,133 +206,6 @@ nav a:hover{
     margin-left: 50px;
 }
 
-/* ok */
-/* menu_visit */ 
-#login a{
-    font-family: 'Sawarabi Gothic', sans-serif; 
-}
-
-/* ok */
-/* home */
-#storyArea{
-    width: 700px;
-    height: 1000px;
-    background-image: url(../img/hand.jpeg);
-    position: relative;
-    /* margin-top: 30px; */
-}
-
-#under{
-    width: 100%;
-    height: 1000px;
-    background-color: black;
-    opacity: 0.7;
-    position: absolute;
-}
-
-#over{
-    width: 600px;
-    color: whitesmoke;
-    position: absolute;
-    margin: 50px auto auto 50px;
-    /* height: auto; */
-}
-
-#over p{
-    font-family: 'Sawarabi Gothic', sans-serif;
-}
-
-/* ok */
-/* copyright.php */
-#copyright{
-    text-align: end;
-    opacity: 0.3;
-    margin-top: 100px;
-}
-
-/* ok */
-/* login.php */
-#login_1{
-    width: 500px;
-    opacity:0.7;
-    padding-top: 100px;
-}
-
-/* ok */
-/* signin.php */
-#signin_1{
-    /* position: absolute; */
-    /* top: 250px; */
-    /* left: 330px; */
-    width: 500px;
-    opacity:0.7;
-    padding-top: 100px;
-    /* margin-left: auto;
-    margin-right: auto; */
-}
-
-#signin_1 form{
-    /* background-color:gray; */
-}
-#signin_1 div{
-    /* z-index: 10;
-    color: black; */
-}
-
-/* mystory.php */
-/* #mainImage #gray{
-    width: 80%;
-    height: auto;
-    background-color: gray;
-    /* position: absolute; */
-    /* opacity: 0.2; */
-/* } */
-
-#mainImage #mystory, #mainImage #story_1{
-    width: 70%;
-    height: auto;
-    padding-top: 70px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-#mystory h4{
-    padding-bottom: 40px;
-}
-
-#mystory p{
-    font-family: 'Sawarabi Gothic', sans-serif;
-}
-
-/* ok */
-/* story.php */
-#story_main{
-    width: 60%;
-    padding-top: 70px;
-    position: relative;
-    z-index: 10;
-}
-#story_content{
-    color: white;
-}
-.comm_area{
-    color: black;
-    background-color: white;
-    opacity: 0.7;
-}
-#story_bottom{
-    width: 60%;
-    margin-top:80px;
-}
-
-
-/* form_story.php */
-.storyform_area{
-    width: 45%;
-    padding-top: 120px;
-}
-
-/* #user_edit_1 */
 
 /* users.php */
 #adminImage{

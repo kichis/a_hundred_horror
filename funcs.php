@@ -44,6 +44,15 @@ function avoidUser(){
     }
 }
 
+// 簡単なバリデーション(空欄?制限文字数以内?)
+function isFilledLimited($content, $max){
+    if( $content == "" || mb_strlen($content) > $max ){
+        return false;
+    }else{
+        return true;
+    }
+}
+
 // 以下、signin用バリデーション //
 
 // 空欄ではないか

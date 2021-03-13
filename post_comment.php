@@ -13,7 +13,6 @@ $user_id = $_SESSION["user_id"];
 $comment = $_POST["comment"];
 
 // コメント内容チェック
-// $isfilled = empty
 if( $comment=="" || mb_strlen($comment) > 10 ){
   $_SESSION["comment"] = $comment;
   redirect("story.php?story_id={$story_id}");

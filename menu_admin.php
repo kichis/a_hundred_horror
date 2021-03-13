@@ -24,7 +24,7 @@
                     <a href="mystory.php" class="nav-link m-4">私の「語り」</a>
                 </li>
                 <li class="nav-item">
-                    <a href="user_post.php" class="nav-link m-4">新しく「語る」</a>
+                    <a href="form_story.php" class="nav-link m-4">新しく「語る」</a>
                 </li>
                 <li class="nav-item">
                     <a href="users.php" class="nav-link m-4">語り手たち</a>

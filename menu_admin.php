@@ -21,7 +21,7 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a href="mystory.php" class="nav-link m-4">私の「語り」</a>
+                    <a href="mystories.php" class="nav-link m-4">私の「語り」</a>
                 </li>
                 <li class="nav-item">
                     <a href="form_story.php" class="nav-link m-4">新しく「語る」</a>

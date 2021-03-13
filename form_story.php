@@ -51,10 +51,10 @@ avoid();
             <form method="post" action="post_story.php">
                 <!-- 必須、文字数 100字まで -->
                 <h4 class="text-primary mb-4 ml-2">題名</h4>
-                    <input type="text" name="title" maxlength="100" class="form-control mb-4" placeholder="ex. 友人Aの体験" value="<?= $_SESSION["title"]?>" required>
+                    <input type="text" name="title" maxlength="100" class="form-control mb-4" placeholder="ex. 友人Aの体験" value="<?= h($_SESSION["title"])?>" required>
                 <!-- 必須、文字数 10万字まで -->
                 <h5 class="text-primary mb-4 ml-3">語り</h5>
-                    <textarea name="content" cols="30" rows="20" maxlength="100000" class="form-control mb-5" placeholder="ex. この前、高校時代の友人Aに会ったのだけど、・・・" required><?= $_SESSION["content"]?></textarea>
+                    <textarea name="content" cols="30" rows="20" maxlength="100000" class="form-control mb-5" placeholder="ex. この前、高校時代の友人Aに会ったのだけど、・・・" required><?= h($_SESSION["content"])?></textarea>
                 <div class="d-flex">
                     <button type="submit" class="btn btn-md bg-secondary text-white border-white px-5 mx-auto">投稿</button>
                 </div>

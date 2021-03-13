@@ -103,7 +103,7 @@ $comments = getComment($pdo, $id);
                     }
                     if($_SESSION["user_status"]==1||$_SESSION["user_status"]==2){
                         echo "<form method='post' action='post_comment.php'>
-                                <textarea name='comment' rows='3' class='form-control w-50 d-inline-flex align-bottom font_sawarabi mt-4' placeholder='コメントする(10,000字以内)'>{$_SESSION["comment"]}</textarea>
+                                <textarea name='comment' rows='3' maxlength='10000' class='form-control w-50 d-inline-flex align-bottom font_sawarabi mt-4' placeholder='コメントする(10,000字以内)'>" . h($_SESSION["comment"]) . "</textarea>
                                 <button type='submit' class='btn btn-md bg-dark text-white ml-3' name='story_id' value='{$r["story_id"]}'>投稿</button>
                             </form>";
                     }

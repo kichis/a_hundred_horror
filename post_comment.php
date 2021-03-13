@@ -12,8 +12,7 @@ $story_id = $_POST["story_id"];
 $user_id = $_SESSION["user_id"];
 $comment = $_POST["comment"];
 
-// コメント内容チェック
-if( $comment=="" || mb_strlen($comment) > 10 ){
+if( isFilledLimited($comment, 10000) == false ){
   $_SESSION["comment"] = $comment;
   redirect("story.php?story_id={$story_id}");
 }

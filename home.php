@@ -72,7 +72,6 @@ if($status==false) sql_error($stmt);
         <div id="under"></div>
         <div id="over">
             <?php             
-            // var_dump($all);
             while($r = $stmt->fetch(PDO::FETCH_ASSOC)){
                 ?>  
                 <div>

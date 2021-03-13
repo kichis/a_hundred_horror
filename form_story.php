@@ -1,6 +1,8 @@
 <!-- デザインはあとで -->
 
 <?php 
+ini_set('display_errors', 1);
+
 session_start();
 require("db_connection.php");
 include("funcs.php");
@@ -47,12 +49,12 @@ avoid();
     <div id="mainImage_2">
         <div class="storyform_area mx-auto">
             <form method="post" action="post_story.php">
-                <!-- 文字数 100字まで -->
+                <!-- 必須、文字数 100字まで -->
                 <h4 class="text-primary mb-4 ml-2">題名</h4>
-                    <input type="text" name="title" maxlength="100" class="form-control mb-4" placeholder="ex. 友人Aの体験">
-                <!-- 文字数 10万字まで -->
+                    <input type="text" name="title" maxlength="100" class="form-control mb-4" placeholder="ex. 友人Aの体験" value="<?= $_SESSION["title"]?>" required>
+                <!-- 必須、文字数 10万字まで -->
                 <h5 class="text-primary mb-4 ml-3">語り</h5>
-                    <textarea name="content" cols="30" rows="20" maxlength="100000" class="form-control mb-5" placeholder="ex. この前、高校時代の友人Aに会ったのだけど、・・・"></textarea>
+                    <textarea name="content" cols="30" rows="20" maxlength="100000" class="form-control mb-5" placeholder="ex. この前、高校時代の友人Aに会ったのだけど、・・・" required><?= $_SESSION["content"]?></textarea>
                 <div class="d-flex">
                     <button type="submit" class="btn btn-md bg-secondary text-white border-white px-5 mx-auto">投稿</button>
                 </div>
@@ -60,7 +62,11 @@ avoid();
         </div>
     </div>
 
-    <?php include("copyright.php"); ?>
+    <?php 
+    $_SESSION["title"] = "";
+    $_SESSION["content"] = "";
+    include("copyright.php");
+    ?>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

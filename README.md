@@ -75,7 +75,13 @@ __PHP&JS__
   1. /PHP/login.php : HTMLをブラウザに渡す -> /ブラウザ/ HTML受け取る(ここで遷移履歴をみると、”document.referrer”==login.php)
 
 __mySQL__  
-- varcharの制限数はbyteではなく文字数（全角でも半角でも1文字）  
+- varcharの制限数はbyteではなく文字数（全角でも半角でも1文字） 
+- text型の文字数(*1bit=1文字ではない文字はこの文字数以下になる)  
+|型|上限bit数|上限文字数(*)|
+|---|---|---|
+|text|16|65,535|
+|mediumtext|24|16,777,215|
+|longtext|32|4,294,967,295|  
 
 __HTML__
 - 属性のpattern=""でお手軽バリデーションができる  

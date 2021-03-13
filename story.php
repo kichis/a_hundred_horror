@@ -77,16 +77,16 @@ $comments = getComment($pdo, $id);
                 <p id="story_content"><?= h($r["content"])?></p>
                 <!-- 怖ボタン -->
                 <form mehod='get' action='add_horror.php'>
-                    <p class="d-inline-flex mr-3"><i class="fas fa-ghost mr-2 my-auto"></i><?= $r["horror"]?></p>
+                    <p class="d-inline-flex font_sawarabi mr-3"><i class="fas fa-ghost mr-2 my-auto"></i><?= $r["horror"]?></p>
                     <?php
                     if($_SESSION["user_status"]==1||$_SESSION["user_status"]==2){
                         $isPushed = hasPushed($pdo, $id, $_SESSION["user_id"]);
                         echo "<button type='submit' name='story_id' value='{$r["story_id"]}' 
-                                class='btn btn-sm bg-dark text-white d-inline-flex'";
+                                class='btn btn-md bg-dark text-white d-inline-flex'";
                             if($isPushed==false){
-                                echo ">怖！</button>";
+                                echo "><span class='font_sawarabi'>怖！</span></button>";
                             }else{
-                                echo "disabled>怖！済み</button>";
+                                echo "disabled><span class='font_sawarabi'>怖！</span>済み</button>";
                             }
                         echo    "<input type='hidden' name='user_id' value='{$_SESSION['user_id']}'>";
                     }
@@ -94,17 +94,17 @@ $comments = getComment($pdo, $id);
                 </form>
                 <!-- コメントエリア(コメントは1万文字まで) -->
                 <div class="mt-3">
-                    <p class=""><b>comment</b></p>
+                    <p class="font_sawarabi"><b>comment</b></p>
                     <?php
                     for($i=0 ; $i < count($comments); $i++){
                         $comm = $comments[$i];
                         echo "<p class='mb-1 ml-3'>" . h($comm["user"]) . " ( {$comm["date"]} )</p>";
-                        echo "<p class='comm_area d-inline-flex py-1 px-2 mb-3 ml-3'>" . h($comm["comment"]) . "</p><br>";
+                        echo "<p class='comm_area d-inline-flex font_sawarabi py-1 px-2 mb-3 ml-3'>" . h($comm["comment"]) . "</p><br>";
                     }
                     if($_SESSION["user_status"]==1||$_SESSION["user_status"]==2){
                         echo "<form method='post' action='post_comment.php'>
-                                <textarea name='comment' rows='3' class='form-control w-50 d-inline-flex align-bottom mt-4' placeholder='コメントする(10,000字以内)'>{$_SESSION["comment"]}</textarea>
-                                <button type='submit' class='btn btn-sm bg-dark text-white ml-3' name='story_id' value='{$r["story_id"]}'>投稿する</button>
+                                <textarea name='comment' rows='3' class='form-control w-50 d-inline-flex align-bottom font_sawarabi mt-4' placeholder='コメントする(10,000字以内)'>{$_SESSION["comment"]}</textarea>
+                                <button type='submit' class='btn btn-md bg-dark text-white ml-3' name='story_id' value='{$r["story_id"]}'>投稿</button>
                             </form>";
                     }
                     $_SESSION["comment"] = "";

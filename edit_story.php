@@ -67,7 +67,7 @@ if($status==false) {
 
     <div id="mainImage_2">
         <div class="storyform_area mx-auto">
-            <form method="post" action="update_story.php">
+            <form method="post" action="edit_story_act.php">
                 <h5 class="ml-2">#<?=$r["story_id"]?></h5>
                 <!-- 必須、文字数 100字まで -->
                 <h4 class="text-primary mb-4 ml-2">題名</h4>
@@ -78,8 +78,8 @@ if($status==false) {
                 <div class="d-flex">
                     <button type="submit" class="btn btn-md bg-success px-5 mx-auto hover_white">編集 完了</button>
                 </div>
-                <!-- <input type="hidden" name="id" value="<?=$r["id"];?>">
-                <input type="hidden" name="hoge" value="1">  -->
+                <input type="hidden" name="story_id" value="<?=$r["story_id"]?>">
+                <!-- <input type="hidden" name="hoge" value="1"> -->
             </form>
         </div>  
     </div>

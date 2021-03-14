@@ -7,6 +7,8 @@
 - Bootstrap 4.5.0
 - PHP 7.4.2
 
+## 工夫した点
+- copyrightsのあたりをクリックすると良いことがあります。
 
  ## todo
  - branchを作成、セルフでプルリクする

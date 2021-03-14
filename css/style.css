@@ -64,6 +64,10 @@ nav a:hover{
     margin-top: 100px;
 }
 
+#copyright a{
+    text-decoration: none;
+}
+
 /* ok */
 /* home */
 #inst{
@@ -158,18 +162,18 @@ nav a:hover{
 }
 
 /* ok */
-/* users.php */
+/* users.php、ayakas.php */
 #admin_area{
     width: 100%;
+    min-height: 800px;
     background-color: black;
     position: relative;
 }
 
-#user_list{
+#user_list, #ayakas_area{
     width: 60%;
-    z-index: 2;
     position: relative;
-
+    z-index: 2;
 }
 
 #admin_bgimg{
@@ -186,50 +190,23 @@ nav a:hover{
     z-index: 1;
 }
 
-
-
-
-#user_list table{
-    /* background-color: transparent; */
+/* ayakas.php */
+#ayakas_area{
+    padding-top: 170px;
+    margin-left: 38%;
+    color: red;
 }
 
-
-
-#signin_1 form{
-    /* background-color:gray; */
-}
-#signin_1 div{
-    /* z-index: 10;
-    color: black; */
-}
-
-/* #mainImage #gray{
-    width: 80%;
-    height: auto;
-    background-color: gray;
-    /* position: absolute; */
-    /* opacity: 0.2; */
-/* } */
-
-
-
-
-
+/* 
 #sField{
     width: 800px;
     margin-left: auto;
     margin-right: auto;
-}
+} */
 
 
 
 
 
 
-/* ayakas.php */
-#ayakas_1{
-    position: absolute;
-    top: 250px;
-    left: 330px;
-    color: red;
-}
+

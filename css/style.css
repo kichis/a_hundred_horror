@@ -26,6 +26,7 @@
 #mainImage_2{
     /* ページ内のコンテンツが長くなる可能性があるページに使うmainImage(copyrightと被ってしまうため) */
     width: 100%;
+    min-height: 800px;
     background-image: url(../img/candle_2.jpg);
     background-size: 100% auto;
     background-repeat: no-repeat;

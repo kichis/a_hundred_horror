@@ -79,7 +79,6 @@ if($status==false) {
                     <button type="submit" class="btn btn-md bg-success px-5 mx-auto hover_white">編集 完了</button>
                 </div>
                 <input type="hidden" name="story_id" value="<?=$r["story_id"]?>">
-                <!-- <input type="hidden" name="hoge" value="1"> -->
             </form>
         </div>  
     </div>

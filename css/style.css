@@ -18,6 +18,14 @@
     background-color: black;
 }
 
+.scaring{
+    background-image: url(../img/horror_woman.jpeg);
+    background-size: 100% auto;
+    background-position: 0% 21%;
+    background-color:rgba(0,0,0,0.5);
+    background-blend-mode: darken;
+}
+
 #mainImage{
     width: 100%;
     height: 800px;
@@ -38,7 +46,7 @@
 
 /* ok */
 /* menu */
-nav a{
+nav a, .nav-item button{
     color: whitesmoke;
 }
 
@@ -54,6 +62,25 @@ nav a:hover{
 /* menu_visit */ 
 #login a{
     font-family: 'Sawarabi Gothic', sans-serif; 
+}
+
+/* ok */
+/* menu_ban */ 
+/* ボタン選択時でも影がつかないようにする */
+.nav-item button.active, 
+.nav-item button.active.focus, 
+.nav-item button.active:focus, 
+.nav-item button.focus, 
+.nav-item button.focus:active, 
+.nav-item button:active, 
+.nav-item button:active:focus, 
+.nav-item button:focus
+{
+    outline: 0;
+    outline-offset: 0;
+    background-image: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 /* ok */

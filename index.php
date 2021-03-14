@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <title>あなたと百物語</title>
 </head>
-<body>
+<body class="scaring">
     <div>
         <h2>告</h2>
         <p>百物語に参加したことにより生じた不利益・悪影響に関して、当サイトは一切の責任を持ちません。</p>
@@ -17,7 +17,7 @@
         <p>百物語を始めますか？</p>
         
         <button onclick="location.href='./home.php'">はい</button>
-        <button onclick="location.href='./goodbye.php'">いいえ</button>
+        <!-- <button onclick="location.href='./goodbye.php'">いいえ</button> -->
     </div>
 </body>
 </html>

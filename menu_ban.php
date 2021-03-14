@@ -6,38 +6,62 @@
 
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav">
-                <li class="nav-item m-3">
-                    わ
-                    <!-- <a href="mystories.php" class="nav-link m-4">私の「語り」</a> -->
+                <li class="nav-item">
+                    <button class="btn btn-md ml-5 m-4" onclick="alert('う')">わ</button>
                 </li>
-                <li class="nav-item  m-3">
-                    る
-                    <!-- <a href="form_story.php" class="nav-link m-4">新しく「語る」</a> -->
+                <li class="nav-item">
+                    <button class="btn btn-md m-4" onclick="alert('し')">る</button>
                 </li>
-                <li class="nav-item  m-3">
-                    い
-                    <!-- <a href="users.php" class="nav-link m-4">語り手たち</a> -->
+                <li class="nav-item">
+                    <button class="btn btn-md m-4" onclick="alert('ろ')">い</button>
                 </li>
-                <li class="nav-item  m-3">
-                    こ
-                    <!-- <a href="ayakas.php" class="nav-link m-4">妖たち</a> -->
+                <li class="nav-item">
+                    <button class="btn btn-md m-4" onclick="alert('に')">こ</button>
                 </li>
-                <li class="nav-item  m-3">
-                    だ
+                <li class="nav-item">
+                    <button class="btn btn-md m-4" onclick="alert('い')">だ</button>
                 </li>
-                <li class="nav-item m-3">
-                    れ
+                <li class="nav-item">
+                    <button class="btn btn-md m-4" onclick="alert('る')">れ</button>
                 </li>
-                <li class="nav-item m-3">
-                    だ
+                <li class="nav-item">
+                    <button class="btn btn-md m-4" onclick="alert('よ')">だ</button>
                 </li>
             </ul>
         </div>
         
         <div id="account_area">
             <p class="mb-1 pr-2">おや、<?= $_SESSION["user_name"]?>さん</p>
-            <a href="logout.php" class="text-secondary font_sawarabi font-weight-bold d-block text-right pr-4">去る<i class="fas fa-door-open fa-lg"></i></a>
+            <button class="btn text-secondary font_sawarabi d-flex mr-2 ml-auto" onclick="scaringUser()">去る<i class="fas fa-door-open fa-lg"></i></button>
         </div>
     </nav>
+
+<script>
+    function scaringUser(){
+        alert("きみだ")
+        let target = document.querySelector("body")
+        target.innerHTML = ""
+        var ele = document.documentElement;
+        ele.requestFullscreen();
+        // HACK: setTimeoutを重ねるのはあまり良い実装ではなさそうだが、他に手段を思い付かず。更に回数が多い場合は繰り返し処理にした方がよい？
+        window.setTimeout(function(){
+            target.classList.add('scaring')
+
+            window.setTimeout(function(){
+                target.classList.remove('scaring')
+                var music = new Audio('不気味な笑い声.mp3');
+                music.play();
+
+                window.setTimeout(function(){
+                document.exitFullscreen()  
+                location.href = 'logout.php' 
+                }, 2000);
+
+            }, 1200);
+
+        }, 2000);
+    }  
+</script>
+
 </body>
 </html>

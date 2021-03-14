@@ -36,9 +36,9 @@ avoidUser();
     }
     ?>
 
-    <div id="adminImage">
+    <div id="admin_image">
         <div id="kumo"></div>
-        <div id="ayakas_1">
+        <div id="user_list">
             <h1><b>一緒に働く妖怪・幽霊たちを募集中！</b></h1>
             <h1>「悲鳴の絶えない楽しい職場です」</h1>
         </div>

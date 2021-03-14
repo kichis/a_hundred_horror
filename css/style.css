@@ -157,6 +157,41 @@ nav a:hover{
     padding-top: 120px;
 }
 
+/* ok */
+/* users.php */
+#admin_area{
+    width: 100%;
+    background-color: black;
+    position: relative;
+}
+
+#user_list{
+    width: 60%;
+    z-index: 2;
+    position: relative;
+
+}
+
+#admin_bgimg{
+    width: 100%;
+    height: 800px;
+    background-image: url(../img/tsuchikumo.jpg);
+    background-size: 100% auto;
+    background-position: 0% 15%;
+    background-color:rgba(0,0,0,0.8);
+    background-blend-mode: darken;
+    background-repeat: no-repeat;
+    position: absolute;
+    top:0;
+    z-index: 1;
+}
+
+
+
+
+#user_list table{
+    /* background-color: transparent; */
+}
 
 
 
@@ -189,32 +224,7 @@ nav a:hover{
 
 
 
-/* users.php */
-#adminImage{
-    width: 100%;
-    height: 800px;
-    position: relative;
-}
 
-#adminImage #kumo{
-    width: 100%;
-    height: 100%;
-    background-image: url(../img/kumo.jpg);
-    background-size: cover;
-    background-position: 85% 15%;
-    opacity: 0.3;
-}
-
-#adminImage #clear{
-    position: absolute;
-    top: 100px;
-    left: 400px;
-    color: red;
-}
-
-#clear table{
-    background-color: transparent;
-}
 
 /* ayakas.php */
 #ayakas_1{

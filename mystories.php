@@ -61,7 +61,6 @@ if($status==false) {
     };
     include($menu());
     ?>
-    <p id="test"></p>
     <div id="mainImage_2">
         <div id="mystory_main" class="mx-auto">
             <h4>私の「語り」</h4>

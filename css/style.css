@@ -3,6 +3,9 @@
 .font_sawarabi{
     font-family: 'Sawarabi Gothic', sans-serif;
 }
+.hover_white:hover, .hover_white:focus{
+    color: white;
+}
 
 .body{
     width: 100%;
@@ -121,7 +124,8 @@
     margin-top:80px;
 }
 
-/* mystory.php */
+/* ok */
+/* mystories.php */
 #mystory_main h4{
     margin-bottom: 70px;
 }

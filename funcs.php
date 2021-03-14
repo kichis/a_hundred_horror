@@ -44,6 +44,20 @@ function avoidUser(){
     }
 }
 
+// 当該ストーリーの筆者以外禁止
+function avoidNonAuthor($pdo, $story_id, $user_id){
+    $stmt = $pdo->prepare("SELECT user_id FROM stories WHERE story_id = :story_id");
+    $stmt->bindValue(':story_id', $story_id, PDO::PARAM_INT);
+    $status = $stmt->execute(); 
+    if($status==false)sql_error($stmt);
+    $author = $stmt->fetch();
+    if($author["user_id"] != $user_id){
+        redirect("home.php");
+    }else{
+        // 何もせずに終了
+    }
+}
+
 // 簡単なバリデーション(空欄?制限文字数以内?)
 function isFilledLimited($content, $max){
     if( $content == "" || mb_strlen($content) > $max ){

@@ -1,5 +1,7 @@
 /* サワラビゴシックが効いているのかどうか？ */
 
+/* ok */
+/* 全ファイルに関わるスタイル */
 .font_sawarabi{
     font-family: 'Sawarabi Gothic', sans-serif;
 }
@@ -124,7 +126,6 @@ nav a:hover{
     width: 60%;
     padding-top: 70px;
 }
-/* #user_edit_1 */
 
 #story_content{
     color: white;
@@ -157,6 +158,8 @@ nav a:hover{
 }
 
 
+
+
 #signin_1 form{
     /* background-color:gray; */
 }
@@ -172,19 +175,6 @@ nav a:hover{
     /* position: absolute; */
     /* opacity: 0.2; */
 /* } */
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

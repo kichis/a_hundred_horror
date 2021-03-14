@@ -1,30 +1,27 @@
+<!-- デザインはあとで -->
+
 <?php 
 ini_set('display_errors', 1);
 
-
 session_start();
+require("db_connection.php");
 include("funcs.php");
 
+$story_id = $_GET["story_id"];
+$user_id = $_SESSION["user_id"];
+
 ss_chg();
-avoid();
-
-// 自分のストーリー以外削除できないようにバリデーション
-
-
-$id = $_GET["id"];
-
-// dbへ接続
 $pdo = db_conn();
-// 該当の語り情報取得
-$sql = "SELECT * FROM stories WHERE id = :id";
+// 自分のストーリー以外編集できないように
+avoidNonAuthor($pdo, $story_id, $user_id);
+
+$sql = "SELECT * FROM stories WHERE story_id = :story_id";
 $stmt = $pdo->prepare($sql);
-$stmt->bindValue(':id', $id, PDO::PARAM_INT);      //Integer（数値の場合 PDO::PARAM_INT)
+$stmt->bindValue(':story_id', $story_id, PDO::PARAM_INT);
 $status = $stmt->execute();
 
-// 語りデータ取り出し
-$view="";
 if($status==false) {
-    sql_error();
+    sql_error($stmt);
 }else{
     $r = $stmt->fetch();
 }
@@ -36,51 +33,60 @@ if($status==false) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+
+<!-- スタイルはあとで -->
     <!-- base font -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500&display=swap" rel="stylesheet">
     <!-- specific font -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&display=swap" rel="stylesheet">
-    <!-- CSS only -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> 
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&display=swap" rel="stylesheet"> -->
 
-    <title>あなたと百物語　｜　「語り」を編集</title>
+    <!-- login icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> 
+    <link rel="stylesheet" href="css/style.css">
+    <title>あなたと百物語 ｜ 「語り」を編集</title>
 </head>
 
 <body class="body">
     <?php 
-    if($_SESSION["user_status"]==1){
-        include("menu_user.php");
-    }else if($_SESSION["user_status"]==2){
-        include("menu_admin.php");
-    }else if($_SESSION["user_status"]==3){
-        include("menu_ban.php");
-    }else{   //session: 0/なし
-        include("menu_visit.php");
-    }
+    $menu = function (){
+        switch($_SESSION["user_status"]){
+            case 1:
+                return "menu_user.php";
+            case 2:
+                return "menu_admin.php";
+            case 3:
+                return "menu_ban.php";
+            default:
+                return "menu_visit.php";
+        }
+    };
+    include($menu());
     ?>
 
-    <div id="mainImage">
-        <div id="user_edit_1">
-            <form method="post" action="user_update.php">
-                <h4 style="color:blue;margin-bottom:16px">題</h4><input type="text" name="title" id="" class="form-control w-75" style="margin-bottom:16px" value="<?=$r["title"];?>">
-
-                <p style="color:blue;">語り</p><textarea name="content" id="" cols="30" rows="20" class="form-control w-75 mb-3"><?=$r["content"];?></textarea>
-
-                <input type="hidden" name="id" value="<?=$r["id"];?>">
-                <input type="submit" value="上書き" class="btn bg-gray text-white border-white">
-                <input type="hidden" name="hoge" value="1">
+    <div id="mainImage_2">
+        <div class="storyform_area mx-auto">
+            <form method="post" action="update_story.php">
+                <h5 class="ml-2">#<?=$r["story_id"]?></h5>
+                <!-- 必須、文字数 100字まで -->
+                <h4 class="text-primary mb-4 ml-2">題名</h4>
+                    <input type="text" name="title" maxlength="100" class="form-control mb-4" value="<?= h($r["title"])?>" required>
+                <!-- 必須、文字数 10万字まで -->
+                <h5 class="text-primary mb-4 ml-3">語り</h5>
+                    <textarea name="content" cols="30" rows="20" maxlength="100000" class="form-control mb-5" required><?= h($r["content"])?></textarea>
+                <div class="d-flex">
+                    <button type="submit" class="btn btn-md bg-success px-5 mx-auto hover_white">編集 完了</button>
+                </div>
+                <!-- <input type="hidden" name="id" value="<?=$r["id"];?>">
+                <input type="hidden" name="hoge" value="1">  -->
             </form>
-        </div>
-        
-       
+        </div>  
     </div>
 
-    <!-- copyright -->
     <?php include("copyright.php"); ?>
 
 
-<!-- JS, Popper.js, and jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>

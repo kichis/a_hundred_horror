@@ -35,6 +35,20 @@
 }
 
 /* ok */
+/* menu */
+nav a{
+    color: whitesmoke;
+}
+
+nav a:hover{
+    text-decoration: none;
+}
+
+#account_area{
+    color: tomato;
+}
+
+/* ok */
 /* menu_visit */ 
 #login a{
     font-family: 'Sawarabi Gothic', sans-serif; 
@@ -182,34 +196,7 @@
     margin-right: auto;
 }
 
-/* menu */
-.navbar{
-     background-color: black;
-}
 
-nav a{
-    font-family: 'Noto Serif JP', serif;
-    color: whitesmoke;
-}
-
-nav a:hover{
-    text-decoration: none;
-}
-
-#name{
-    font-family: 'Noto Serif JP', serif;
-    color: tomato;
-}
-
-#name p{
-    margin: 0;
-}
-
-#name a{
-    font-family: 'Sawarabi Gothic', sans-serif;
-    margin-right: 0;
-    margin-left: 50px;
-}
 
 
 /* users.php */

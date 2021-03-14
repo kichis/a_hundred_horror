@@ -16,14 +16,10 @@
             </ul>
         </div>
 
-        <div id="name">
-            <p>こんばんは、<?php echo $_SESSION["user_name"];?>さん</p>
-            <a href="logout.php" class="text-secondary">去る<i class="fas fa-door-open fa-lg"></i></a>
+        <div id="account_area">
+            <p class="mb-1 pr-2">こんばんは、<?php echo $_SESSION["user_name"]?>さん</p>
+            <a href="logout.php" class="text-secondary font_sawarabi font-weight-bold d-block text-right pr-4">去る<i class="fas fa-door-open fa-lg"></i></a>
         </div>
-        
     </nav>
-
-
-
 </body>
 </html>

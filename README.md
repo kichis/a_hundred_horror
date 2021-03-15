@@ -5,6 +5,7 @@
 - HTML5
 - CSS3
 - Bootstrap 4.5.0
+- pagination.js 2.1.4 [参考サイト](https://qiita.com/hiroism/items/eee7a9eb0bd9539c30b2)
 - PHP 7.4.2
 
 ## 工夫した点

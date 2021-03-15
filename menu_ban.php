@@ -49,7 +49,7 @@
 
             window.setTimeout(function(){
                 target.classList.remove('scaring')
-                var music = new Audio('不気味な笑い声.mp3');
+                var music = new Audio('sound/不気味な笑い声.mp3');
                 music.play();
 
                 window.setTimeout(function(){

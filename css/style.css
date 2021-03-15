@@ -104,7 +104,7 @@ nav a:hover{
 
 #storyArea{
     width: 700px;
-    height: 1000px;
+    height: 1300px;
     background-image: url(../img/hand.jpeg);
     position: relative;
     /* margin-top: 30px; */
@@ -112,7 +112,7 @@ nav a:hover{
 
 #under{
     width: 100%;
-    height: 1000px;
+    height: 100%;
     background-color: black;
     opacity: 0.7;
     position: absolute;
@@ -122,13 +122,19 @@ nav a:hover{
     width: 600px;
     color: whitesmoke;
     position: absolute;
-    margin: 50px auto auto 50px;
-    /* height: auto; */
+    margin: 0 auto auto 50px;
+    padding-top: 50px;
+    height: 100%;
 }
 
 #over p{
     font-family: 'Sawarabi Gothic', sans-serif;
 }
+
+/* #datas-all-pager{
+    position: absolute;
+    bottom: 20%;
+} */
 
 /* ok */
 /* login.php */

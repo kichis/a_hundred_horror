@@ -184,9 +184,15 @@ nav a:hover{
 
 /* ok */
 /* form_story.php */
-.storyform_area{
+.storyform_area, .myaccount_area{
     width: 45%;
     padding-top: 120px;
+}
+
+/* edit_myaccount.php */
+.myaccount_area{
+    width: 45%;
+    padding-top: 100px;
 }
 
 /* ok */

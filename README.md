@@ -70,8 +70,18 @@ __PHP__
   => やはりデフォルトだと"1文目の返値しかPHPに渡されない(取得できない?)"という仕様になっている。(= 1文目:INSERT & 2文目:SELECT でも返値が取得できない)
      解決法: $stmt->nextRowset(); で"次の結果に移る"と言う指示をだしてから、 $stmt->fetch(); する。
 
+
+__xssについて__  
+PHP
+- script入りの文字列 + そのままvar_dump -> scriptが実行される(危険！)
+- json_encode(script入りの文字列) + var_dump -> scriptはHTMLに反映されるがなぜか実行はされない(たぶん危険)
+with JS  
+- json_encode(script入りの文字列) -> JSON.parse() -> HTMLに挿入 -> scriptはHTMLに反映されるがなぜか実行はされない(たぶん危険)
+- json_encode(script入りの文字列) -> JSON.parse() -> サニタイズ(危険な文字をエスケープ) -> HTMLに挿入 -> scriptではなく文字列としてHTMLに反映される(安全)
+
 __PHP&JS__  
-- PHP -> JSへの値渡しは&lt;script&gt;内にPHPの記述をするだけ、簡単。  
+- PHP -> JSへの値渡しは&lt;script&gt;内にPHPの記述をするだけ、簡単。 
+  配列の場合は、PHP配列をjson_encode()->JS変数にJSON.parse()。（この場合でもxss可能なのでサニタイズの必要あり）
   JSではxss対応のためのメソッドがないらしいので、replace+正規表現などでエスケープする。    
   [これ](http://senoway.hatenablog.com/entry/2013/05/31/235051)などが役に立ちそう。
 - login_act.phpでログインできずにlogin.phpに戻ってきたとき、JSの”document.referrer(=現ページに遷移する前のページ)”を取得した結果は"login.php"だった。  

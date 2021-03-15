@@ -17,7 +17,12 @@ WHERE status = 1 AND user_status != 3 ORDER BY story_id DESC";
 $stmt = $pdo->prepare($sql);
 $status = $stmt->execute();
 if($status==false) sql_error($stmt);
-
+$r = $stmt->fetchAll();
+// $r = $stmt->fetch();
+// var_dump($r);
+$php_json = json_encode($r);
+// echo "------------------------";
+// var_dump($php_json)
 ?>
 
 <!DOCTYPE html>
@@ -72,25 +77,29 @@ if($status==false) sql_error($stmt);
         <div id="under"></div>
         <div id="over">
             <?php             
-            while($r = $stmt->fetch(PDO::FETCH_ASSOC)){
+            for($i = 0; $i <= 9; $i++){
                 ?>  
                 <div>
-                    <p class="d-inline-flex mr-2 mb-0">#<?=$r["story_id"]?></p>
+                    <p class="d-inline-flex mr-2 mb-0">#<?=$r[$i]["story_id"]?></p>
                     <p class="d-inline-flex" class="">
                         <b>
-                            <a href="story.php?story_id=<?=$r["story_id"]?>"><?=$r["title"]?></a>
+                            <a href="story.php?story_id=<?=$r[$i]["story_id"]?>"><?=h($r[$i]["title"])?></a>
                         </b>
                     </p>
                     <p class="mb-5">
-                        語り手：<?=$r["user"]?>&nbsp;/&nbsp;
-                        <i class="fas fa-ghost"></i>&nbsp;<?=$r["horror"]?>&nbsp;/&nbsp;
-                        <?=$r["date"]?>
+                        語り手：<?=h($r[$i]["user"])?>&nbsp;/&nbsp;
+                        <i class="fas fa-ghost"></i>&nbsp;<?=$r[$i]["horror"]?>&nbsp;/&nbsp;
+                        <?=$r[$i]["date"]?>
                     </p>
                 </div>
             <?php
             }
             ?>
         </div>
+
+
+
+
     </div>
 
     <?php include("copyright.php"); ?>
@@ -98,6 +107,15 @@ if($status==false) sql_error($stmt);
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script src="./funcs.js"></script>
+
+    <script>
+            let datas = JSON.parse('<?= $php_json?>')
+            // 注意!! datasをHTML出力する場合は、sani()を使ってサニタイズすること !!
+            console.log(datas)
+
+
+    </script>
 
 </body>
 </html>

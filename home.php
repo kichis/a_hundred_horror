@@ -44,6 +44,10 @@ $php_json = json_encode($r);
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> 
     <link rel="stylesheet" href="css/style.css">
+    <!-- pagenation.js -->
+    <link rel="stylesheet" href="./node_modules/paginationjs/dist/contents.css"><!-- 後で -->
+    <link rel="stylesheet" href="./node_modules/paginationjs/dist/pagination.css"><!-- 後で -->
+
     <title>あなたと百物語</title>
 </head>
 <body class="body">
@@ -76,43 +80,63 @@ $php_json = json_encode($r);
     <div id="storyArea" class="mt-5 mx-auto">
         <div id="under"></div>
         <div id="over">
-            <?php             
-            for($i = 0; $i <= 9; $i++){
-                ?>  
-                <div>
-                    <p class="d-inline-flex mr-2 mb-0">#<?=$r[$i]["story_id"]?></p>
-                    <p class="d-inline-flex" class="">
-                        <b>
-                            <a href="story.php?story_id=<?=$r[$i]["story_id"]?>"><?=h($r[$i]["title"])?></a>
-                        </b>
-                    </p>
-                    <p class="mb-5">
-                        語り手：<?=h($r[$i]["user"])?>&nbsp;/&nbsp;
-                        <i class="fas fa-ghost"></i>&nbsp;<?=$r[$i]["horror"]?>&nbsp;/&nbsp;
-                        <?=$r[$i]["date"]?>
-                    </p>
-                </div>
-            <?php
-            }
-            ?>
+            <ul>
+                <div id="datas-all-contents"></div><!-- コンテンツの埋め込み先をid指定 -->
+            </ul>
+            <div class="pager d-flex justify-content-center mt-4" id="datas-all-pager"></div><!-- ページャーの埋め込み先をid指定 -->
         </div>
-
-
-
-
     </div>
 
     <?php include("copyright.php"); ?>
 
+<!-- Bootstrap -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-<script src="./funcs.js"></script>
+    <!-- 自作JSファイル -->
+    <script src="./JS/funcs.js"></script>
+    <!-- pagination.js -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="./node_modules/paginationjs/dist/pagination.js"></script>
 
     <script>
-            let datas = JSON.parse('<?= $php_json?>')
-            // 注意!! datasをHTML出力する場合は、sani()を使ってサニタイズすること !!
-            console.log(datas)
+    // [1] 配列のデータを用意
+    let datas = JSON.parse('<?= $php_json?>')
+    // 注意!! datasをHTML出力する場合は、sani()を使ってサニタイズすること !!
+
+    // [2] pagination.jsの設定
+    $(function() {
+        $('#datas-all-pager').pagination({ // diary-all-pagerにページャーを埋め込む
+            dataSource: datas,
+            pageSize: 10, // 1ページあたりの表示数
+            prevText: ' &nbsp; &lt; 前へ &nbsp; ',
+            nextText: ' &nbsp; 次へ &gt; &nbsp;',
+            // ページがめくられた時に呼ばれる
+            callback: function(data, pagination) {
+                // dataの中に次に表示すべきデータが入っているので、html要素に変換
+                $('#datas-all-contents').html(template(data)); // diary-all-contentsにコンテンツを埋め込む
+                var position = $('#storyArea').offset().top;
+                $('body,html').animate({scrollTop:position}, 400, 'swing');
+            }
+        });
+    });
+    // [3] データ1つ1つをhtml要素に変換する
+    function template(dataArray) {
+      return dataArray.map(function(data) {
+        return '<div>'+
+                    '<p class="d-inline-flex mr-2 mb-0">#' + data.story_id + '</p>'+
+                    '<p class="d-inline-flex" class="">'+
+                        '<b>'+
+                            '<a href="story.php?story_id=' + data.story_id + '">' + sani(data.title) + '</a>'+
+                        '</b>'+
+                    '</p>'+
+                    '<p class="mb-5">'+
+                        '語り手：' + sani(data.user) + '&nbsp;/&nbsp;'+
+                        '<i class="fas fa-ghost"></i>&nbsp;' + data.horror + '&nbsp;/&nbsp;'+ data.date +
+                    '</p>'+
+                '</div>'
+      })
+    }
 
 
     </script>

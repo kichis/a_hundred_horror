@@ -13,6 +13,9 @@
                 <li class="nav-item">
                     <a href="form_story.php" class="nav-link m-4">新しく「語る」</a>
                 </li>
+                <li class="nav-item">
+                    <a href="edit_myaccount.php" class="nav-link m-4">ユーザ情報</a>
+                </li>
             </ul>
         </div>
 

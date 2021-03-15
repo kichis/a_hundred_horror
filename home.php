@@ -100,11 +100,11 @@ $php_json = json_encode($r);
     <script src="./node_modules/paginationjs/dist/pagination.js"></script>
 
     <script>
-    // [1] 配列のデータを用意
+    // [1] 配列のデータを用意  注意!! datasをHTML出力する場合は、sani()を使ってサニタイズすること !!
     let datas = JSON.parse('<?= $php_json?>')
-    // 注意!! datasをHTML出力する場合は、sani()を使ってサニタイズすること !!
 
     // [2] pagination.jsの設定
+    let counter = 0
     $(function() {
         $('#datas-all-pager').pagination({ // diary-all-pagerにページャーを埋め込む
             dataSource: datas,
@@ -115,8 +115,15 @@ $php_json = json_encode($r);
             callback: function(data, pagination) {
                 // dataの中に次に表示すべきデータが入っているので、html要素に変換
                 $('#datas-all-contents').html(template(data)); // diary-all-contentsにコンテンツを埋め込む
-                var position = $('#storyArea').offset().top;
-                $('body,html').animate({scrollTop:position}, 400, 'swing');
+                // HACK:初回ロード時にscrollTopが呼ばれないようにするためのif文(良い実装ではないが、clickイベントがページネーションボタンで感知できなかったため仕方なし)
+                if(counter > 0){
+                    var position = $('#storyArea').offset().top;
+                    $('body,html').animate({scrollTop:position}, 400, 'swing');
+                    counter++
+                }else{
+                    // 初回 counter = 0
+                    counter++
+                }
             }
         });
     });
@@ -137,8 +144,6 @@ $php_json = json_encode($r);
                 '</div>'
       })
     }
-
-
     </script>
 
 </body>

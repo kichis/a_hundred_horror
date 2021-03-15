@@ -14,6 +14,9 @@
                     <a href="form_story.php" class="nav-link m-4">新しく「語る」</a>
                 </li>
                 <li class="nav-item">
+                    <a href="edit_myaccount.php" class="nav-link m-4">私の「語り手」情報</a>
+                </li>
+                <li class="nav-item">
                     <a href="users.php" class="nav-link m-4">語り手たち</a>
                 </li>
                 <li class="nav-item">

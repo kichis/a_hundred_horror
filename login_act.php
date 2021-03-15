@@ -12,7 +12,7 @@ $pdo = db_conn();
 
 //データ検索SQL作成
 //* PasswordがHash化の場合→条件はlidのみ
-$sql = "SELECT * FROM users WHERE email=:email";
+$sql = "SELECT * FROM users WHERE email=:email AND user_status != 0";
 $stmt = $pdo->prepare($sql); 
 $stmt->bindValue(':email', $email, PDO::PARAM_STR);
 $status = $stmt->execute();

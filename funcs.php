@@ -104,7 +104,7 @@ function checkInputLength($key, $value, $valiFlg){
     if(mb_strlen($value) > $max){
         $_SESSION["signinErrorMsg"] .= "{$key}を{$max}文字以下にしてください<br>";
     }else if(mb_strlen($value) < $min){
-        $_SESSION["signinErrorMsg"] .= "{$key}を{$min}文字以下にしてください<br>";
+        $_SESSION["signinErrorMsg"] .= "{$key}を{$min}文字以上にしてください<br>";
     }else{
         $valiFlg += 1;
     }
@@ -132,12 +132,28 @@ function checkSameRecord($pdo, $col, $data, $comment, $valiFlg){
     $stmt->bindValue(':val', $data, PDO::PARAM_STR);
     $status = $stmt->execute();
     if($status == false) sql_error($stmt);
-    $val = $stmt->fetch();
-    // var_dump($val);
-    if($val[$col] == $data){
-        $_SESSION["signinErrorMsg"] .= $comment. "<br>";
-    }else{
+    $val = $stmt->fetch(); // 重複があればtrue
+    if(!$val){
         $valiFlg += 1;
+    }else{
+        $_SESSION["signinErrorMsg"] .= $comment. "<br>";
+    }
+    return $valiFlg;
+}
+// 同じ登録があるか(自分の登録以外で)
+function checkSameRecordExptMe($pdo, $col, $data, $user_id, $comment, $valiFlg){
+    // HACK:本来はSQLに直接変数を埋め込むべきでないが、ユーザが入力できる変数でないので、コード内の可用性を考慮してこの形とする
+    $sql = "SELECT * from users WHERE user_id != :user_id AND " . $col . " = :val";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+    $stmt->bindValue(':val', $data, PDO::PARAM_STR);
+    $status = $stmt->execute();
+    if($status == false) sql_error($stmt);
+    $val = $stmt->fetch();
+    if(!$val){
+        $valiFlg += 1;
+    }else{
+        $_SESSION["signinErrorMsg"] .= $comment. "<br>";
     }
     return $valiFlg;
 }

@@ -224,6 +224,13 @@ nav a:hover{
     z-index: 1;
 }
 
+/* stories.php */
+#story_list{
+    width: 90%;
+    position: relative;
+    z-index: 2;
+}
+
 /* ayakas.php */
 #ayakas_area{
     padding-top: 170px;

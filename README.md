@@ -100,6 +100,12 @@ __PHP&JS__
   1. /PHP/login_act.php : login.phpからのログイン情報を処理(ブラウザ側には何も渡さない)
   1. /PHP/login.php : HTMLをブラウザに渡す -> /ブラウザ/ HTML受け取る(ここで遷移履歴をみると、”document.referrer”==login.php)
 
+__JS__  
+- change():元々のHTML要素に対して有効
+- on('change', '子要素'):javascriptで変更された後のHTMLにも有効
+- 属性を取得するのはattr()、プロパティを取得するのはprop()  
+  (HTML属性はattr()、inputの値関係はprop()で取得するのがよい、という意見あり)
+
 __mySQL__  
 - varcharの制限数はbyteではなく文字数（全角でも半角でも1文字） 
 - text型の文字数(*1bit=1文字ではない文字はこの文字数以下になる)  

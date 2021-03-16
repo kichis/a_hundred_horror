@@ -1,6 +1,7 @@
 <!-- デザインはあとで -->
 
 <?php 
+
 session_start();
 require("db_connection.php");
 include("funcs.php");
@@ -63,19 +64,19 @@ if($status==false) {
             <h3 class="text-center mb-5">「語り手」登録者一覧</h3>
             <table class="table text-danger">
                 <tr>
-                    <th class="px-4 bg-dark">user_id</th>
-                    <th class="px-4 bg-dark">user_name</th>
-                    <th class="px-4 bg-dark">email</th>
-                    <th class="px-4 bg-dark">user_status ※</th>               
+                    <th class="pl-4 bg-dark">user_id</th>
+                    <th class="pl-2 bg-dark">user_name</th>
+                    <th class="pl-2 bg-dark">email</th>
+                    <th class="pl-2 bg-dark">user_status ※</th>               
                 </tr>
                 <form method="post" action="edit_user_act.php">
                 <?php while( $r = $stmt->fetch(PDO::FETCH_ASSOC)):?>
                 <tr>
-                    <td class="px-4"><?=$r["user_id"]?></td>
+                    <td class="pl-4"><?=$r["user_id"]?></td>
                     <input type="hidden" name="user_id[]" value="<?=$r["user_id"]?>">
-                    <td class="px-4"><?=$r["user_name"]?></td>
-                    <td class="px-4"><?=$r["email"]?></td>
-                    <td class="px-4">
+                    <td class="pl-2"><?=$r["user_name"]?></td>
+                    <td class="pl-2"><?=$r["email"]?></td>
+                    <td class="pl-2">
                         <input type="number" min="0" max="3" name="user_status[]" value="<?=$r["user_status"]?>">
                     </td>
                 </tr>

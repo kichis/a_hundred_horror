@@ -63,6 +63,7 @@ if($status==false) {
     <div id="admin_area">
         <div id="story_list" class="mx-auto pt-5">
             <h3 class="text-center mb-5">「語り」一覧</h3>
+            <form method="post" action="edit_stories_act.php" class="form-label">
             <table class="table text-danger">
                 <tr>
                     <th class="pl-4 bg-dark">story_id</th>
@@ -70,10 +71,9 @@ if($status==false) {
                     <th class="pl-2 bg-dark">Author</th>
                     <th class="pl-2 bg-dark">Date of post</th>               
                     <th class="pl-2 bg-dark">Horror</th>               
-                    <th class="pl-2 bg-dark">Status</th>        
+                    <th class="pl-2 bg-dark">Status ※</th>        
                     <th class="pl-2 bg-dark">Status変更</th>        
                 </tr>
-                <form method="post" action="edit_user_act.php" class="form-label">
                     <?php while( $r = $stmt->fetch(PDO::FETCH_ASSOC)):?>
                     <tr>
                         <td class="pl-4"><?=$r["story_id"]?></td>
@@ -81,11 +81,13 @@ if($status==false) {
                         <td class="pl-2"><?= h($r["user"])?></td>
                         <td class="pl-2"><?=$r["date"]?></td>
                         <td class="pl-2"><?=$r["horror"]?></td>
-
-                        <td class="pl-2" id="status_<?= $r["story_id"]?>"><?=$r["story_status"]?></td>
+                        <td class="pl-2" id="status_<?= $r["story_id"]?>">
+                            <!-- 表示するだけのデータ(postするためのselectboxはjQueryでレンダリングする) -->
+                            <?=$r["story_status"]?>
+                        </td>
                         <td class="pl-2">
-                            <input type="checkbox" name="edited" class="checkbox form-control form-control-sm" value="<?=$r["story_id"]?>">
-                            <!-- 現在のstatus#を保持する用 -->
+                            <input type="checkbox" name="edited_story_id[]" class="checkbox form-control form-control-sm" value="<?=$r["story_id"]?>">
+                            <!-- 現行(変更前)のstatus#を保持している -->
                             <input type="hidden" id="statusNum_<?= $r['story_id']?>" value="<?=$r["story_status"]?>">
                         </td>
                     </tr>
@@ -95,12 +97,11 @@ if($status==false) {
                 <p class="mb-2">※ Status</p>
                 <p>
                     0: 非表示(投稿者が削除 or 管理者が非表示操作した「語り」)<br>
-                    1: 表示(＊)<br>
-                    ※ ブラックリストユーザーの「語り」はこの一覧では"1"として表示されますが、実際のウェブサイト上には表示されません。
+                    1: 表示(ブラックリストユーザーの「語り」はこの一覧では"1"として表示されますが、<br>実際のウェブサイト上には表示されません。)
                 </p>
             </div>
             <button type="submit" class="btn btn-md bg-dark text-white border-white d-flex py-2 px-5 mt-5 mx-auto">変更を確定</button>
-                </form>
+            </form>
         </div>
         <div id="admin_bgimg"></div>
     </div>
@@ -113,7 +114,6 @@ if($status==false) {
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-    <!-- name & value -->
     <!-- 配列？ -->
 <script>
 $('input[type="checkbox"]').on('change', function(){
@@ -125,7 +125,7 @@ $('input[type="checkbox"]').on('change', function(){
     if(checkbox.prop('checked')){
         // checked
         // 方法1(保守性がある:複数選択肢になっても使える)
-        statusCol.html('<select name="status" class="form-select form-select-sm form-control form-control-sm" id="statusRev_'+ story_id +'">'+  
+        statusCol.html('<select name="statusRev[]" class="form-select form-select-sm form-control form-control-sm"  id="statusRev_'+ story_id +'">'+  
                             '<option value="0">0:非表示</option>'+
                             '<option value="1">1:表示</option>'+
                         '</select>')
@@ -138,13 +138,9 @@ $('input[type="checkbox"]').on('change', function(){
         // statusCol.html('<select name="status" class="form-select form-select-sm form-control form-control-sm" id="">'+ options + '</select>')
     }else{
         // unchecked
-        statusCol.text(statusNum)
-        
+        statusCol.text(statusNum) 
     }
-    // console.log(statusNum)
-
 })
-
 </script>
 
 

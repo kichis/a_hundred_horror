@@ -18,7 +18,10 @@ $status = $stmt->execute();
 
 if($status==false) {
   sql_error($stmt);
-}else{}
+}else{
+    $result = $stmt->fetchAll();
+    $php_json = json_encode($result);
+}
 
 // 以下、情報を修正する場合の値のバリデーション
 
@@ -90,6 +93,9 @@ if(isset($uname)){
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> 
     <link rel="stylesheet" href="css/style.css">
+    <!-- pagenation.js -->
+    <link rel="stylesheet" href="./node_modules/paginationjs/dist/pagination.css">
+
     <title>あなたと百物語 | 管理画面</title>
 </head>
 <body class="body">
@@ -117,47 +123,18 @@ if(isset($uname)){
                 <?= $_SESSION["signinErrorMsg"];?>
             </p>
             <form method="post" action="users.php">
-            <table class="table text-danger">
-                <tr>
-                    <th class="pl-4 bg-dark">user_id</th>
-                    <th class="pl-2 bg-dark">user_name</th>
-                    <th class="pl-2 bg-dark">email</th>
-                    <th class="pl-2 bg-dark">user_status ※</th>               
-                    <th class="pl-2 bg-dark">内容を変更</th>               
-                </tr>
-                <?php 
-                $user_datas = array();
-                while( $r = $stmt->fetch(PDO::FETCH_ASSOC)):
-                      ?>
-                <tr>
-                    <td class="pl-4">
-                        <?=$r["user_id"]?>
-                    </td>
-                    <td class="pl-2" id="uname_<?= $r["user_id"]?>">
-                        <?=$r["user_name"]?>
-                    </td>
-                    <td class="pl-2" id="email_<?= $r["user_id"]?>">
-                        <?=$r["email"]?>
-                    </td>
-                    <td class="pl-2" id="status_<?= $r["user_id"]?>">
-                        <?=$r["user_status"]?>
-                    </td>
-                    <td class="pl-2">
-                        <input type="checkbox" name="edited_user_id[]" class="checkbox form-control form-control-sm" value="<?=$r["user_id"]?>">
-                    </td>
-                </tr>
-                <?php endwhile?>
-            </table>
-            <div class="w-25 ml-auto">
-                <p class="mb-2">※ user_status</p>
-                <p>
-                    0: 退会済みユーザー<br>
-                    1: 登録ユーザー<br>
-                    2: 管理者<br>
-                    3: ブラックリストユーザー
-                </p>
-            </div>
-            <button type="submit" class="btn btn-md bg-dark text-white border-white d-flex py-2 px-5 mt-5 mx-auto">変更を確定</button>
+                <table class="table text-danger" id="datas-all-contents"></table>
+                <div class="pager d-flex justify-content-center mt-4" id="datas-all-pager"></div>
+                <div class="w-25 ml-auto">
+                    <p class="mb-2">※ ユーザステータス</p>
+                    <p>
+                        0: 退会済みユーザー<br>
+                        1: 登録ユーザー<br>
+                        2: 管理者<br>
+                        3: ブラックリストユーザー
+                    </p>
+                </div>
+                <button type="submit" class="btn btn-md bg-dark text-white border-white d-flex py-2 px-5 mt-5 mx-auto">変更を確定</button>
             </form>
             </div>
         <div id="admin_bgimg"></div>
@@ -168,13 +145,16 @@ if(isset($uname)){
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-
+    <!-- 自作JSファイル -->
+    <script src="./JS/funcs.js"></script>
+    <!-- pagination.js -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="./node_modules/paginationjs/dist/pagination.js"></script>
 
 <script>
 $(function() {
 
-    $('input[type="checkbox"]').on('change', function(){
+    $(document).on('change', 'input[type="checkbox"]', function(){
         let checkbox = $(this)
         let user_id = checkbox.val()
         let unameCol = $('#uname_' + user_id)
@@ -185,10 +165,10 @@ $(function() {
             // result = ajaxの返値
             if(checkbox.prop('checked')){
                 // checked
-                // unameCol.html('<input type="text" name="edited_uname[]" maxlength="100" minlength="3" class="form-control" required value="' + result["user_name"] + '">')
-                unameCol.html('<input type="text" name="edited_uname[]" maxlength="100" class="form-control" value="' + result["user_name"] + '">')
-                // emailCol.html('<input type="email" name="edited_email[]" maxlength="255" minlength="3" class="form-control" required value="'+ result["email"] +'">')
-                emailCol.html('<input type="text" name="edited_email[]" maxlength="255" class="form-control" value="'+ result["email"] +'">')
+                unameCol.html('<input type="text" name="edited_uname[]" maxlength="100" minlength="3" class="form-control" required value="' + result["user_name"] + '">')
+                // unameCol.html('<input type="text" name="edited_uname[]" maxlength="100" class="form-control" value="' + result["user_name"] + '">')
+                emailCol.html('<input type="email" name="edited_email[]" maxlength="255" minlength="3" class="form-control" required value="'+ result["email"] +'">')
+                // emailCol.html('<input type="text" name="edited_email[]" maxlength="255" class="form-control" value="'+ result["email"] +'">')
 
                 statusCol.html('<select name="edited_status[]" class="form-select form-select-sm form-control" id="edited_status_'+ user_id + '">'+  
                         '<option value="0">0:退会済み</option>'+
@@ -229,7 +209,49 @@ $(function() {
         })
     };
 
+    // ページネーション
+    // [1] 配列のデータを用意  注意!! datasをHTML出力する場合は、sani()を使ってサニタイズすること !!
+    let datas = JSON.parse('<?= $php_json?>')
+
+    // [2] pagination.jsの設定
+    $(function() {
+        $('#datas-all-pager').pagination({ // diary-all-pagerにページャーを埋め込む
+            dataSource: datas,
+            pageSize: 10, // 1ページあたりの表示数
+            prevText: ' &nbsp; &lt; 前へ &nbsp; ',
+            nextText: ' &nbsp; 次へ &gt; &nbsp;',
+            // ページがめくられた時に呼ばれる
+            callback: function(data, pagination) {
+                // dataの中に次に表示すべきデータが入っているので、html要素に変換
+                const thFormat = '<tr>'+
+                        '<th class="pl-4 bg-dark">user_id</th>'+
+                        '<th class="pl-2 bg-dark">ユーザ名</th>'+
+                        '<th class="pl-2 bg-dark">Email</th>'+
+                        '<th class="pl-2 bg-dark">ユーザステータス ※</th>'+               
+                        '<th class="pl-2 bg-dark">内容を変更</th>'+                     
+                    '</tr>'
+                $('#datas-all-contents').html(thFormat + template(data)); // diary-all-contentsにコン
+                $('body,html').animate({scrollTop:0}, 400, 'swing');
+            }
+        });
+    });
+    // [3] データ1つ1つをhtml要素に変換する
+    function template(dataArray) {
+        return dataArray.map(function(data) {
+        return '<tr>'+
+                    '<td class="pl-4">'+ data.user_id +'</td>'+
+                    '<td class="pl-2" id="uname_'+ data.user_id +'">'+ data.user_name +'</td>'+
+                    '<td class="pl-2" id="email_'+ data.user_id +'">'+ data.email +'</td>'+
+                    '<td class="pl-2" id="status_'+ data.user_id +'">'+ data.user_status +'</td>'+
+                    '<td class="pl-2">'+
+                        '<input type="checkbox" name="edited_user_id[]" class="checkbox form-control form-control-sm" value="'+ data.user_id +'">'+
+                    '</td>'+
+                '</tr>'
+        })
+    }
+
 })
+
 </script>
 </body>
 </html>

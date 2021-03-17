@@ -1,6 +1,7 @@
 <!-- デザインはあとで -->
 
 <?php 
+ini_set('display_errors', 1);
 
 session_start();
 require("db_connection.php");
@@ -14,14 +15,11 @@ $sql = "SELECT * FROM users ORDER BY user_id ASC;";
 $stmt = $pdo->prepare($sql);
 $status = $stmt->execute();
 
-// データ表示取得
-$view="";
 if($status==false) {
-  sql_error();
-}else{
-  
-}
+  sql_error($stmt);
+}else{}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -62,22 +60,29 @@ if($status==false) {
     <div id="admin_area">
         <div id="user_list" class="mx-auto pt-5">
             <h3 class="text-center mb-5">「語り手」登録者一覧</h3>
+            <form method="post" action="edit_user_act.php">
             <table class="table text-danger">
                 <tr>
                     <th class="pl-4 bg-dark">user_id</th>
                     <th class="pl-2 bg-dark">user_name</th>
                     <th class="pl-2 bg-dark">email</th>
                     <th class="pl-2 bg-dark">user_status ※</th>               
+                    <th class="pl-2 bg-dark">内容を変更</th>               
                 </tr>
-                <form method="post" action="edit_user_act.php">
-                <?php while( $r = $stmt->fetch(PDO::FETCH_ASSOC)):?>
+                <?php 
+                $user_datas = array();
+                while( $r = $stmt->fetch(PDO::FETCH_ASSOC)):
+                      ?>
                 <tr>
                     <td class="pl-4"><?=$r["user_id"]?></td>
-                    <input type="hidden" name="user_id[]" value="<?=$r["user_id"]?>">
                     <td class="pl-2"><?=$r["user_name"]?></td>
                     <td class="pl-2"><?=$r["email"]?></td>
+                    <td class="pl-2" id="status_<?= $r["story_id"]?>">
+                        <?=$r["user_status"]?>
+                        <!-- <input type="number" min="0" max="3" name="user_status[]" value="<?=$r["user_status"]?>"> -->
+                    </td>
                     <td class="pl-2">
-                        <input type="number" min="0" max="3" name="user_status[]" value="<?=$r["user_status"]?>">
+                        <input type="checkbox" name="edited_user_id[]" class="checkbox form-control form-control-sm" value="<?=$r["user_id"]?>">
                     </td>
                 </tr>
                 <?php endwhile?>
@@ -91,8 +96,8 @@ if($status==false) {
                     3: ブラックリストユーザー
                 </p>
             </div>
-            <button type="submit" class="btn btn-md bg-dark text-white border-white d-flex py-2 px-5 mt-5 mx-auto">更新</button>
-                </form>
+            <button type="submit" class="btn btn-md bg-dark text-white border-white d-flex py-2 px-5 mt-5 mx-auto">変更を確定</button>
+            </form>
             </div>
         <div id="admin_bgimg"></div>
     </div>
@@ -102,5 +107,82 @@ if($status==false) {
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<script>
+$(function() {
+
+    $('input[type="checkbox"]').on('change', function(){
+        let checkbox = $(this)
+        let user_id = checkbox.val()
+        // let statusNum = $('#statusNum_' + user_id).val()
+        // let statusCol = $('#status_' + user_id)
+        console.log(user_id)
+        
+        ajax(user_id).then(function(result) {
+            // result = ajaxの返値
+            if(checkbox.prop('checked')){
+                // checked
+                console.log(result);
+
+            }else{
+                // unchecked
+    
+    
+            }
+        })
+    })
+
+    // statusCol.html('<select name="statusRev[]" class="form-select form-select-sm form-control form-control-sm"  id="statusRev_'+ user_id +'">'+  
+    //                     '<option value="0">0:退会済み</option>'+
+    //                     '<option value="1">1:登録ユーザー</option>'+
+    //                     '<option value="2">2:管理者</option>'+
+    //                     '<option value="3">3:ブラックリストユーザー</option>'+
+    //                 '</select>')
+    // $('#statusRev_' + story_id +' option[value='+ statusNum +']').prop('selected', true)
+
+
+// function getNumber(num) {
+//     return new Promise(function(resolve, reject) {
+//         // numが3以上ならnumを返し、3未満なら"Falied!"のメッセージを返す
+//         if (num >= 3) {
+//             setTimeout(function() {
+//                 resolve(num);
+//             }, 1000);
+//         } else {
+//             reject("Falied!");    
+//         }
+//     });  
+// }
+// getNumber(3).then(function(result) {
+//     console.log(result);
+//     //numに3を加算して、getNumberに返している
+//     return result + 3;
+// })
+
+    function ajax(data){
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                url: 'ajax_getUser.php',
+                type: 'POST',
+                data: { "user_id" : data },
+                dataType: 'json',
+                timeout: 5000,
+            })
+            // 検索成功時にはdataをresolveとして返す
+            .done(function(data) {
+                resolve(data)
+            })
+            // 検索失敗時には、その旨をダイアログ表示
+            .fail(function() {
+                reject("システムでエラーが発生しました"); 
+                window.alert('システムでエラーが発生しました');
+            });
+        })
+    };
+
+})
+</script>
 </body>
 </html>

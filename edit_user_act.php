@@ -29,3 +29,12 @@ if($status==false){
   redirect("users.php");
 }
 ?>
+
+
+<!-- <?php $r = $stmt->fetchAll(); foreach( $r as $val):?> -->
+                <!-- <?php ?> -->
+
+
+
+$result = $stmt->fetchAll();
+                foreach( $result as $r):

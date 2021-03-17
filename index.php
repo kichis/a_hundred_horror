@@ -3,67 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> 
     <link rel="stylesheet" href="css/style.css">
-    <title>あなたと百物語</title>
+    <title>あなたと百物語 | 入り口</title>
 </head>
-<body class="scaring">
-    <div>
-        <h2>告</h2>
+<body class="body d-flex" style="height:100vh">
+    <div id="caution" class="text-center my-auto mx-auto">
         <p>百物語に参加したことにより生じた不利益・悪影響に関して、当サイトは一切の責任を持ちません。</p>
         <p>予めご了承ください。</p>
+        <p class="mt-4">百物語を始めますか？</p>      
+        <button id="entryBtn" class="btn btn-secondary mt-5" onclick="location.href='./home.php'">はい</button>
     </div>
 
-    <div>
-        <p>百物語を始めますか？</p>
-        
-        <button onclick="location.href='./home.php'">はい</button>
-        <!-- <button onclick="location.href='./goodbye.php'">いいえ</button> -->
-    </div>
+<!-- Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 </body>
 </html>
-
-<!-- memo -->
-<!-- user定義：0=withdraw; 1=user; 2=admin; 3=banned(blacklisted) -->
-
-<!-- 反省 -->
-<!-- よかった点： -->
-<!-- ・納得のいくビジュアルにできた -->
-
-<!-- 悔しかった点： -->
-<!-- ・一番やりたかったおばけポイントの設置＆おばけ効果が組み込めなかったこと（時間がなくなってしまった） -->
-<!-- （unityでおばけの顔を作る、悲鳴、化け字、恐怖を煽る言葉） -->
-
-<!-- 改善点 -->
-<!-- ・（login時）user名、emailが登録ずみでないかのチェック -->
-<!-- ・コメントを投稿者が削除できるようにする -->
-<!-- ・各語りのコメント数を表示 -->
-<!-- ・パスワードの字数設定 -->
-
-<!-- 細かい（もっと改善できる）点 -->
-<!-- ・index.php、goodbye.phpのビジュアル改善（看板を立てたかった） -->
-<!-- ・蝋燭を揺らす（同期からのコメント）、蝋燭を段々減らしていく -->
-<!-- ・home.php 新しい記事に”new”をつける-->
-<!-- ・admin_update.phpのbindvalueを含めるとなぜerrorになってしまったのか？ -->
-<!-- ・user_delete.phpで削除する前の削除アラート -->
-<!-- ・投稿にタグ付けができるとなおよし -->
-
-
-
-
-                    <!-- <?php foreach( $result as $r ):?> -->
-                        <td class="pl-4"><?=$r["story_id"]?></td>
-                        <td class="pl-2"><?= h($r["title"])?></td>
-                        <td class="pl-2"><?= h($r["user"])?></td>
-                        <td class="pl-2"><?=$r["date"]?></td>
-                        <td class="pl-2"><?=$r["horror"]?></td>
-                        <td class="pl-2" id="status_<?= $r["story_id"]?>">
-                            <!-- 表示するだけのデータ(postするためのselectboxはjQueryでレンダリングする) -->
-                            <?=$r["story_status"]?>
-                        </td>
-                        <td class="pl-2">
-                            <input type="checkbox" name="edited_story_id[]" class="checkbox form-control form-control-sm" value="<?=$r["story_id"]?>">
-                            <!-- 現行(変更前)のstatus#を保持している -->
-                            <input type="hidden" id="statusNum_<?= $r['story_id']?>" value="<?=$r["story_status"]?>">
-                        </td>
-
-                                     <!-- <?php endforeach ?> -->

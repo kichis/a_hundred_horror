@@ -72,12 +72,12 @@ $comments = getComment($pdo, $id);
             <div id="story_main" class="mx-auto">
                 <!-- ストーリーメイン -->
                 <p>#<?=$r["story_id"]?></p>
-                <h4 class="text-primary"><?= h($r["title"])?></h4>   
-                <p>[ &nbsp; 語り手：<?= h($r["user"]);?> &nbsp; / &nbsp; <?= $r["date"];?> &nbsp; ]</p>
-                <p id="story_content"><?= h($r["content"])?></p>
+                <h4 class="text-primary mb-3"><?= h($r["title"])?></h4>   
+                <p class="mb-5">[ &nbsp; 語り手：<?= h($r["user"]);?> &nbsp; / &nbsp; <?= $r["date"];?> &nbsp; ]</p>
+                <p id="story_content"><?= nl2br(h($r["content"]))?></p>
                 <!-- 怖ボタン -->
                 <form mehod='get' action='add_horror.php'>
-                    <p class="d-inline-flex font_sawarabi mr-3"><i class="fas fa-ghost mr-2 my-auto"></i><?= $r["horror"]?></p>
+                    <p class="d-inline-flex font_sawarabi mt-5 mr-3"><i class="fas fa-ghost mr-2 my-auto"></i><?= $r["horror"]?></p>
                     <?php
                     if($_SESSION["user_status"]==1||$_SESSION["user_status"]==2){
                         $isPushed = hasPushed($pdo, $id, $_SESSION["user_id"]);
@@ -94,12 +94,12 @@ $comments = getComment($pdo, $id);
                 </form>
                 <!-- コメントエリア(コメントは1万文字まで) -->
                 <div class="mt-3">
-                    <p class="font_sawarabi"><b>comment</b></p>
                     <?php
+                    (count($comments) > 0) ? print '<p class="font_sawarabi"><b>comment</b></p>' : false;
                     for($i=0 ; $i < count($comments); $i++){
                         $comm = $comments[$i];
-                        echo "<p class='mb-1 ml-3'>" . h($comm["user"]) . " ( {$comm["date"]} )</p>";
-                        echo "<p class='comm_area d-inline-flex font_sawarabi py-1 px-2 mb-3 ml-3'>" . h($comm["comment"]) . "</p><br>";
+                        echo "<p class='mb-2 ml-3'>" . h($comm["user"]) . " ( {$comm["date"]} )</p>";
+                        echo "<p class='comm_area d-inline-flex font_sawarabi py-1 px-2 mb-3 ml-3'>" . nl2br(h($comm["comment"])) . "</p><br>";
                     }
                     if($_SESSION["user_status"]==1||$_SESSION["user_status"]==2){
                         echo "<form method='post' action='post_comment.php'>

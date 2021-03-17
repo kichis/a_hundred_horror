@@ -69,7 +69,7 @@ if($status==false) {
             <h3 class="text-center mb-5">「語り」一覧</h3>
             <form method="post" action="edit_stories_act.php" class="form-label">
                 <table class="table text-danger" id="datas-all-contents"></table>
-                <div class="pager d-flex justify-content-center mt-4" id="datas-all-pager"></div>
+                <div class="pager d-flex justify-content-center mt-5" id="datas-all-pager"></div>
                 <div class="w-50 mx-auto mt-5">
                     <p class="mb-2">※ Status</p>
                     <p>

@@ -68,19 +68,22 @@ if($status==false) {
     <div id="mainImage_2">
         <div class="storyform_area mx-auto">
             <form method="post" action="edit_story_act.php">
-                <h5 class="ml-2">#<?=$r["story_id"]?></h5>
+                <h5 class="ml-2 mb-4">#<?=$r["story_id"]?></h5>
                 <!-- 必須、文字数 100字まで -->
-                <h4 class="text-primary mb-4 ml-2">題名</h4>
+                <h5 class="text-primary ml-2 mb-4">題名</h5>
                     <input type="text" name="title" maxlength="100" class="form-control mb-4" value="<?= h($r["title"])?>" required>
                 <!-- 必須、文字数 10万字まで -->
-                <h5 class="text-primary mb-4 ml-3">語り</h5>
+                <h5 class="text-primary ml-2 mb-4">語り</h5>
                     <textarea name="content" cols="30" rows="20" maxlength="100000" class="form-control mb-5" required><?= h($r["content"])?></textarea>
                 <div class="d-flex">
-                    <button type="submit" class="btn btn-md bg-success px-5 mx-auto hover_white">編集 完了</button>
+                    <button type="submit" class="btn btn-md border-success text-white px-5 mx-auto hover_white">編集 完了</button>
                 </div>
                 <input type="hidden" name="story_id" value="<?=$r["story_id"]?>">
             </form>
-        </div>  
+        </div>
+        <div id="story_bottom" class="mx-auto">
+            <a href="home.php">← HOMEへ戻る</a>
+        </div>
     </div>
 
     <?php include("copyright.php"); ?>

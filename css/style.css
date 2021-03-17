@@ -48,8 +48,26 @@
 #caution{
     height: 200px;
 }
+
+#entryBtn.active, 
+#entryBtn.active.focus, 
+#entryBtn.active:focus, 
+#entryBtn.focus, 
+#entryBtn.focus:active, 
+#entryBtn:active, 
+#entryBtn:active:focus, 
+#entryBtn:focus
+{
+    outline: 0;
+    outline-offset: 0;
+    background-image: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
 #entryBtn:hover{
     color: red;
+    background-color: gray;
 }
 
 /* ok */
@@ -194,7 +212,7 @@ nav a:hover{
 /* form_story.php */
 .storyform_area, .myaccount_area{
     width: 45%;
-    padding-top: 120px;
+    padding-top: 100px;
 }
 
 /* edit_myaccount.php */
@@ -237,6 +255,22 @@ nav a:hover{
     width: 90%;
     position: relative;
     z-index: 2;
+}
+
+.checkbox.active, 
+.checkbox.active.focus, 
+.checkbox.active:focus, 
+.checkbox.focus, 
+.checkbox.focus:active, 
+.checkbox:active, 
+.checkbox:active:focus, 
+.checkbox:focus
+{
+    outline: 0;
+    outline-offset: 0;
+    background-image: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 /* ayakas.php */

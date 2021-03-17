@@ -156,7 +156,7 @@ if(isset($uname)){
                     <?= $_SESSION["signinErrorMsg"];?>
                 </p>
                 <div class="d-flex">
-                    <button type="submit" class="btn btn-md bg-success border-white px-5 mx-auto mt-5 hover_white" name='action' value='send'>修正</button>           
+                    <button type="submit" class="btn btn-md bg-success text-white border-white px-5 mx-auto mt-5" name='action' value='send'>修正</button>           
                 </div>
             </form>
         <!-- 削除処理 -->
@@ -188,7 +188,9 @@ if(isset($uname)){
                     </div>
                 </div>
             </div>
-
+        </div>
+        <div id="story_bottom" class="mx-auto">
+            <a href="home.php">← HOMEへ戻る</a>
         </div>
     </div>
 

@@ -62,6 +62,9 @@ avoid();
                 </div>
             </form>
         </div>
+        <div id="story_bottom" class="mx-auto">
+            <a href="home.php">← HOMEへ戻る</a>
+        </div>
     </div>
 
     <?php 

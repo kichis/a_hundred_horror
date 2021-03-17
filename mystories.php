@@ -80,7 +80,11 @@ if($status==false) {
                 </div>
             <?php endwhile ?>
         </div>
+        <div id="story_bottom" class="mx-auto">
+            <a href="home.php">← HOMEへ戻る</a>
+        </div>
     </div>
+
 
     <?php include("copyright.php"); ?>
 

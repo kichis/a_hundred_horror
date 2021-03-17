@@ -1,40 +1,39 @@
 <?php
-// ユーザー情報を一括して更新
+// admin権限で、ユーザー情報を一括して更新
 
 session_start();
+require("db_connection.php");
 include("funcs.php");
 
 ss_chg();
 avoidUser();
 
-$user_status = $_POST["user_status"];
-$user_id = $_POST["user_id"];
+// $user_status = $_POST["user_status"];
+$uname = $_POST["edited_uname"];
+$email = $_POST["edited_email"];
+$user_status = $_POST["edited_status"];
+$user_id = $_POST["edited_user_id"];
 
-//DB接続
+var_dump(count($user_id));
+var_dump($uname);
+
 $pdo = db_conn();
-
-//データ登録SQL作成、実行
-for($i=0 ; $i<count($user_id); $i++){
-    $sql .= "UPDATE users SET user_status = $user_status[$i] WHERE user_id = $user_id[$i];";
-    // $stmt->bindValue(':user_status', $user_status[$i], PDO::PARAM_INT);  //Integer（数値の場合 PDO::PARAM_INT)
-    // $stmt->bindValue(':user_id', $user_id[$i], PDO::PARAM_INT);
+$sql = "";
+for( $i = 0 ; $i < count($user_id); $i++ ){
+  $sql .= "UPDATE users SET user_name = :uname, email = :email, user_status = :user_status WHERE user_id = :user_id;";
+  $stmt = $pdo->prepare($sql);
+  $stmt->bindValue(':uname', $uname[$i], PDO::PARAM_STR);
+  $stmt->bindValue(':email', $email[$i], PDO::PARAM_STR);
+  $stmt->bindValue(':user_status', $user_status[$i], PDO::PARAM_STR);
+  $stmt->bindValue(':user_id', $user_id[$i], PDO::PARAM_INT);
+  $status = $stmt->execute();
 }
-$stmt = $pdo->prepare($sql);
-$status = $stmt->execute();
 
-//データ登録処理後
 if($status==false){
-  sql_error();
+  sql_error($stmt);
 }else{
   redirect("users.php");
 }
+
+
 ?>
-
-
-<!-- <?php $r = $stmt->fetchAll(); foreach( $r as $val):?> -->
-                <!-- <?php ?> -->
-
-
-
-$result = $stmt->fetchAll();
-                foreach( $result as $r):

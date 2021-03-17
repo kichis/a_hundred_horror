@@ -196,7 +196,7 @@ nav a:hover{
 }
 
 /* ok */
-/* users.php、ayakas.php */
+/* users.php */
 #admin_area{
     width: 100%;
     min-height: 800px;
@@ -204,8 +204,8 @@ nav a:hover{
     position: relative;
 }
 
-#user_list, #ayakas_area{
-    width: 60%;
+#user_list{
+    width: 70%;
     position: relative;
     z-index: 2;
 }
@@ -233,6 +233,9 @@ nav a:hover{
 
 /* ayakas.php */
 #ayakas_area{
+    width: 60%;
+    position: relative;
+    z-index: 2;
     padding-top: 170px;
     margin-left: 38%;
     color: red;

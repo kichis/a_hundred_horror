@@ -74,12 +74,17 @@ if($status==false) {
                 while( $r = $stmt->fetch(PDO::FETCH_ASSOC)):
                       ?>
                 <tr>
-                    <td class="pl-4"><?=$r["user_id"]?></td>
-                    <td class="pl-2"><?=$r["user_name"]?></td>
-                    <td class="pl-2"><?=$r["email"]?></td>
-                    <td class="pl-2" id="status_<?= $r["story_id"]?>">
+                    <td class="pl-4">
+                        <?=$r["user_id"]?>
+                    </td>
+                    <td class="pl-2" id="uname_<?= $r["user_id"]?>">
+                        <?=$r["user_name"]?>
+                    </td>
+                    <td class="pl-2" id="email_<?= $r["user_id"]?>">
+                        <?=$r["email"]?>
+                    </td>
+                    <td class="pl-2" id="status_<?= $r["user_id"]?>">
                         <?=$r["user_status"]?>
-                        <!-- <input type="number" min="0" max="3" name="user_status[]" value="<?=$r["user_status"]?>"> -->
                     </td>
                     <td class="pl-2">
                         <input type="checkbox" name="edited_user_id[]" class="checkbox form-control form-control-sm" value="<?=$r["user_id"]?>">
@@ -116,50 +121,33 @@ $(function() {
     $('input[type="checkbox"]').on('change', function(){
         let checkbox = $(this)
         let user_id = checkbox.val()
-        // let statusNum = $('#statusNum_' + user_id).val()
-        // let statusCol = $('#status_' + user_id)
-        console.log(user_id)
+        let unameCol = $('#uname_' + user_id)
+        let emailCol = $('#email_' + user_id)
+        let statusCol = $('#status_' + user_id)
         
         ajax(user_id).then(function(result) {
             // result = ajaxの返値
             if(checkbox.prop('checked')){
                 // checked
-                console.log(result);
+                unameCol.html('<input type="text" name="edited_uname[]" maxlength="100" minlength="3" class="form-control" required value="' + result["user_name"] + '">')
+                emailCol.html('<input type="email" name="edited_email[]" maxlength="255" minlength="3" class="form-control" required value="'+ result["email"] +'">')
+                statusCol.html('<select name="edited_status[]" class="form-select form-select-sm form-control" id="edited_status_'+ user_id + '">'+  
+                        '<option value="0">0:退会済み</option>'+
+                        '<option value="1">1:登録ユーザー</option>'+
+                        '<option value="2">2:管理者</option>'+
+                        '<option value="3">3:ブラックリストユーザー</option>'+
+                    '</select>')
+                $('#edited_status_' + user_id + ' option[value='+ result["user_status"] + ']').prop('selected', true)
 
             }else{
                 // unchecked
-    
+                unameCol.text(result["user_name"])
+                emailCol.text(result["email"])
+                statusCol.text(result["user_status"])
     
             }
         })
     })
-
-    // statusCol.html('<select name="statusRev[]" class="form-select form-select-sm form-control form-control-sm"  id="statusRev_'+ user_id +'">'+  
-    //                     '<option value="0">0:退会済み</option>'+
-    //                     '<option value="1">1:登録ユーザー</option>'+
-    //                     '<option value="2">2:管理者</option>'+
-    //                     '<option value="3">3:ブラックリストユーザー</option>'+
-    //                 '</select>')
-    // $('#statusRev_' + story_id +' option[value='+ statusNum +']').prop('selected', true)
-
-
-// function getNumber(num) {
-//     return new Promise(function(resolve, reject) {
-//         // numが3以上ならnumを返し、3未満なら"Falied!"のメッセージを返す
-//         if (num >= 3) {
-//             setTimeout(function() {
-//                 resolve(num);
-//             }, 1000);
-//         } else {
-//             reject("Falied!");    
-//         }
-//     });  
-// }
-// getNumber(3).then(function(result) {
-//     console.log(result);
-//     //numに3を加算して、getNumberに返している
-//     return result + 3;
-// })
 
     function ajax(data){
         return new Promise(function(resolve, reject) {

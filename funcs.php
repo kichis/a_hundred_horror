@@ -78,6 +78,15 @@ function isFilled($key, $value, $valiFlg){
     }
     return $valiFlg;
 }
+// 空欄ではないか(users.phpのバリデーション用)
+function isFilledArray($id, $value, $colum, $id_list, $valiFlg){
+    if(empty($value)){
+        $_SESSION["signinErrorMsg"] .= "user_id:{$id_list[$id]}の{$colum}を入力してください<br>";
+        $valiFlg -= 1;
+    }else{
+    }
+    return $valiFlg;
+}
 
 // 文字数制限内か
 function checkInputLength($key, $value, $valiFlg){
@@ -107,6 +116,30 @@ function checkInputLength($key, $value, $valiFlg){
         $_SESSION["signinErrorMsg"] .= "{$key}を{$min}文字以上にしてください<br>";
     }else{
         $valiFlg += 1;
+    }
+    return $valiFlg;
+}
+// 文字数制限内か(users.phpのバリデーション用)
+function checkInputLengthArray($id, $value, $colum, $id_list, $valiFlg){
+    $max;
+    $min;
+    switch($colum){
+        case 'お名前':
+            $max = 100;
+            $min = 3;
+            break;
+        case 'Email':
+            $max = 255;
+            $min = 3;
+            break;
+    }
+    if(mb_strlen($value) > $max){
+        $_SESSION["signinErrorMsg"] .= "user_id:{$id_list[$id]}の{$colum}を{$max}文字以下にしてください<br>";
+        $valiFlg -= 1;
+    }else if(mb_strlen($value) < $min){
+        $_SESSION["signinErrorMsg"] .= "user_id:{$id_list[$id]}の{$colum}を{$min}文字以上にしてください<br>";
+        $valiFlg -= 1;
+    }else{
     }
     return $valiFlg;
 }
@@ -151,9 +184,26 @@ function checkSameRecordExptMe($pdo, $col, $data, $user_id, $comment, $valiFlg){
     if($status == false) sql_error($stmt);
     $val = $stmt->fetch();
     if(!$val){
-        $valiFlg += 1;
+    }else{
+        $valiFlg -= 1;
+        $_SESSION["signinErrorMsg"] .= $comment. "<br>";
+    }
+    return $valiFlg;
+}
+// 同じ登録があるか(自分の登録以外で)(users.phpのバリデーション用)
+function checkSameRecordExptMeArray($pdo, $col, $data, $user_id, $comment, $valiFlg){
+    // HACK:本来はSQLに直接変数を埋め込むべきでないが、ユーザが入力できる変数でないので、コード内の可用性を考慮してこの形とする
+    $sql = "SELECT * from users WHERE user_id != :user_id AND " . $col . " = :val";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+    $stmt->bindValue(':val', $data, PDO::PARAM_STR);
+    $status = $stmt->execute();
+    if($status == false) sql_error($stmt);
+    $val = $stmt->fetch();
+    if(!$val){
     }else{
         $_SESSION["signinErrorMsg"] .= $comment. "<br>";
+        $valiFlg -= 1;
     }
     return $valiFlg;
 }
@@ -166,6 +216,17 @@ function checkMatchPattern($pattern, $data, $which, $valiFlg){
         $valiFlg += 1;
     }else{
         $_SESSION["signinErrorMsg"] .= $which. "に使用できない文字が含まれています<br>";
+    }
+    return $valiFlg;
+}
+// 規定の形式(文字種類)に適合しているか(users.phpのバリデーション用)
+function checkMatchPatternArray($pattern, $data, $comment, $valiFlg){
+    // 規定の形式にマッチすれば1、しなければ0(エラーはfalse)
+    $isMatched = preg_match($pattern, $data);    
+    if($isMatched == 1){
+    }else{
+        $_SESSION["signinErrorMsg"] .= $comment;
+        $valiFlg -= 1;
     }
     return $valiFlg;
 }

@@ -21,7 +21,6 @@ $status = $stmt->execute();
 if($status==false) sql_error($stmt);
 $r = $stmt->fetch();
 
-
 // 以下、情報を修正する場合の値のバリデーション
 
 $user_id = $_SESSION["user_id"];

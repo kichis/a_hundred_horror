@@ -8,11 +8,10 @@ include("funcs.php");
 ss_chg();
 avoidUser();
 
-// $user_status = $_POST["user_status"];
-$uname = $_POST["edited_uname"];
-$email = $_POST["edited_email"];
-$user_status = $_POST["edited_status"];
-$user_id = $_POST["edited_user_id"];
+$uname = $_SESSION["edited_uname"];
+$email = $_SESSION["edited_email"];
+$user_status = $_SESSION["edited_status"];
+$user_id = $_SESSION["edited_user_id"];
 
 var_dump(count($user_id));
 var_dump($uname);
@@ -28,6 +27,11 @@ for( $i = 0 ; $i < count($user_id); $i++ ){
   $stmt->bindValue(':user_id', $user_id[$i], PDO::PARAM_INT);
   $status = $stmt->execute();
 }
+
+$_SESSION["edited_uname"] = "";
+$_SESSION["edited_email"] = "";
+$_SESSION["edited_status"] = "";
+$_SESSION["edited_user_id"] = "";
 
 if($status==false){
   sql_error($stmt);

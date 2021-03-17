@@ -1,7 +1,7 @@
 <!-- デザインはあとで -->
 
 <?php 
-ini_set('display_errors', 1);
+// ini_set('display_errors', 1);
 
 session_start();
 require("db_connection.php");
@@ -10,6 +10,7 @@ include("funcs.php");
 ss_chg();
 avoidUser();
 
+// 全ユーザ情報取得
 $pdo = db_conn();
 $sql = "SELECT * FROM users ORDER BY user_id ASC;";
 $stmt = $pdo->prepare($sql);
@@ -18,6 +19,57 @@ $status = $stmt->execute();
 if($status==false) {
   sql_error($stmt);
 }else{}
+
+// 以下、情報を修正する場合の値のバリデーション
+
+$uname = $_POST["edited_uname"];
+$email = $_POST["edited_email"];
+$user_status = $_POST["edited_status"];
+$user_id = $_POST["edited_user_id"];
+
+$valiFlg = 0; // バリデーションに引っかかった場合は-1する
+$_SESSION["signinErrorMsg"] = '';
+
+if(isset($uname)){
+
+    // uname,emailが入力されているか
+    // uname,emailの入力文字数は許容内か
+    // emailは正しい形式か（半角英数・記号に限る、@必要、＠以降に文字列必要)
+    // 修正したuname,emailが他人の登録と被っていないか(退会済みユーザも含め)
+    // 既定の形式に適合しているか
+    foreach($uname as $key => $value){
+        $valiFlg = isFilledArray($key, $value, 'ユーザ名', $user_id, $valiFlg,);
+        $valiFlg = checkInputLengthArray($key, $value, 'お名前', $user_id, $valiFlg);
+        $valiFlg = checkSameRecordExptMeArray($pdo, 'user_name', $value, $user_id[$key], "user_id:{$user_id[$key]} このお名前は使用できません(すでに登録があります)", $valiFlg);
+        // ユーザ名：英数字・記号・ひらがな・カタカナ・漢字ok(日本語は常用しないものは正規表現に含めず)
+        $valiFlg = checkMatchPatternArray('/^[ぁ-ゔァ-ヶ一-龠々・ーゞ＝0-9a-zA-Z\/\-\'".!#$%&*+=?^_`{|}~@(),:[\]]+$/u', $value, "user_id:{$user_id[$key]} お名前に使用できない文字が含まれています<br>", $valiFlg);
+    }
+    foreach($email as $key => $value){
+        $valiFlg = isFilledArray($key, $value, 'Email', $user_id, $valiFlg,);
+        $valiFlg = checkInputLengthArray($key, $value, 'Email', $user_id, $valiFlg);
+        if(!filter_var($value, FILTER_VALIDATE_EMAIL)){
+            $_SESSION["signinErrorMsg"] .= "user_id:{$user_id[$key]} この形式のEmailはご登録いただけません<br>";
+            $valiFlg -= 1;
+        }
+        $valiFlg = checkSameRecordExptMeArray($pdo, 'email', $value, $user_id[$key], "user_id:{$user_id[$key]} このEmailは使用できません(すでに登録があります)", $valiFlg);
+        // Email:半角英数・記号(RFC822に準拠)に限る(注：正規表現中の\はエスケープ用であって、規定外の記号である)
+        // HACK: checkCorrectEmail()でバリデーションできていると思われるが、FILTER_VALIDATE_EMAILの範囲が不明瞭なので保険としてここでもバリデーションする
+        $valiFlg = checkMatchPatternArray("/^([\/\-0-9a-zA-Z.!#$%&'*+=?^_`{|}~@])+$/", $value, "user_id:{$user_id[$key]} Emailに使用できない文字が含まれています<br>", $valiFlg);
+        
+    }
+
+    // echo $valiFlg;
+    // echo $_SESSION["signinErrorMsg"];
+
+    // 全てのバリデーションを通過できたらdbにupdate(通過できない項目があれば、#errorMsgにメッセージ表示)
+    if($valiFlg == 0){
+        $_SESSION["edited_uname"] = $uname;
+        $_SESSION["edited_email"] = $email;
+        $_SESSION["edited_status"] = $user_status;
+        $_SESSION["edited_user_id"] = $user_id;
+        redirect("edit_user_act.php");
+    }
+}
 ?>
 
 
@@ -60,7 +112,11 @@ if($status==false) {
     <div id="admin_area">
         <div id="user_list" class="mx-auto pt-5">
             <h3 class="text-center mb-5">「語り手」登録者一覧</h3>
-            <form method="post" action="edit_user_act.php">
+            <p id="errorMsg" class="text-danger w-50 mx-auto">
+                <!-- ユーザ入力文字列は含まないのでh()しない -->
+                <?= $_SESSION["signinErrorMsg"];?>
+            </p>
+            <form method="post" action="users.php">
             <table class="table text-danger">
                 <tr>
                     <th class="pl-4 bg-dark">user_id</th>
@@ -129,8 +185,11 @@ $(function() {
             // result = ajaxの返値
             if(checkbox.prop('checked')){
                 // checked
-                unameCol.html('<input type="text" name="edited_uname[]" maxlength="100" minlength="3" class="form-control" required value="' + result["user_name"] + '">')
-                emailCol.html('<input type="email" name="edited_email[]" maxlength="255" minlength="3" class="form-control" required value="'+ result["email"] +'">')
+                // unameCol.html('<input type="text" name="edited_uname[]" maxlength="100" minlength="3" class="form-control" required value="' + result["user_name"] + '">')
+                unameCol.html('<input type="text" name="edited_uname[]" maxlength="100" class="form-control" value="' + result["user_name"] + '">')
+                // emailCol.html('<input type="email" name="edited_email[]" maxlength="255" minlength="3" class="form-control" required value="'+ result["email"] +'">')
+                emailCol.html('<input type="text" name="edited_email[]" maxlength="255" class="form-control" value="'+ result["email"] +'">')
+
                 statusCol.html('<select name="edited_status[]" class="form-select form-select-sm form-control" id="edited_status_'+ user_id + '">'+  
                         '<option value="0">0:退会済み</option>'+
                         '<option value="1">1:登録ユーザー</option>'+

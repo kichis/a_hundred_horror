@@ -46,3 +46,24 @@
 <!-- ・admin_update.phpのbindvalueを含めるとなぜerrorになってしまったのか？ -->
 <!-- ・user_delete.phpで削除する前の削除アラート -->
 <!-- ・投稿にタグ付けができるとなおよし -->
+
+
+
+
+                    <!-- <?php foreach( $result as $r ):?> -->
+                        <td class="pl-4"><?=$r["story_id"]?></td>
+                        <td class="pl-2"><?= h($r["title"])?></td>
+                        <td class="pl-2"><?= h($r["user"])?></td>
+                        <td class="pl-2"><?=$r["date"]?></td>
+                        <td class="pl-2"><?=$r["horror"]?></td>
+                        <td class="pl-2" id="status_<?= $r["story_id"]?>">
+                            <!-- 表示するだけのデータ(postするためのselectboxはjQueryでレンダリングする) -->
+                            <?=$r["story_status"]?>
+                        </td>
+                        <td class="pl-2">
+                            <input type="checkbox" name="edited_story_id[]" class="checkbox form-control form-control-sm" value="<?=$r["story_id"]?>">
+                            <!-- 現行(変更前)のstatus#を保持している -->
+                            <input type="hidden" id="statusNum_<?= $r['story_id']?>" value="<?=$r["story_status"]?>">
+                        </td>
+
+                                     <!-- <?php endforeach ?> -->

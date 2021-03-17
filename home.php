@@ -41,7 +41,6 @@ $php_json = json_encode($r);
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> 
     <link rel="stylesheet" href="css/style.css">
     <!-- pagenation.js -->
-    <!-- <link rel="stylesheet" href="./node_modules/paginationjs/dist/contents.css"> -->
     <link rel="stylesheet" href="./node_modules/paginationjs/dist/pagination.css"><!-- 後で -->
 
     <title>あなたと百物語</title>

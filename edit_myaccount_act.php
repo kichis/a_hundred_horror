@@ -27,6 +27,7 @@ $status = $stmt->execute();
 if($status==false){
     sql_error($stmt);
 }else{
+    $_SESSION["user_name"] = $uname;
     $_SESSION["uname"] = "";
     $_SESSION["email"] = "";
     $_SESSION["passwRev"] = "";

@@ -13,9 +13,6 @@ $email = $_SESSION["edited_email"];
 $user_status = $_SESSION["edited_status"];
 $user_id = $_SESSION["edited_user_id"];
 
-var_dump(count($user_id));
-var_dump($uname);
-
 $pdo = db_conn();
 $sql = "";
 for( $i = 0 ; $i < count($user_id); $i++ ){
@@ -38,6 +35,4 @@ if($status==false){
 }else{
   redirect("users.php");
 }
-
-
 ?>

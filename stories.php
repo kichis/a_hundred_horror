@@ -1,8 +1,4 @@
-<!-- デザインはあとで -->
-
 <?php 
-ini_set('display_errors', 1);
-
 session_start();
 require("db_connection.php");
 include("funcs.php");
@@ -16,8 +12,6 @@ ORDER BY story_id DESC;";
 $stmt = $pdo->prepare($sql);
 $status = $stmt->execute();
 
-// データ表示取得
-$view="";
 if($status==false) {
   sql_error($stmt);
 }else{
@@ -31,13 +25,8 @@ if($status==false) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- スタイルはあとで -->
-<!-- base font -->
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500&display=swap" rel="stylesheet">
-<!-- specific font -->
-<!-- <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&display=swap" rel="stylesheet"> -->
-
+    <!-- base font -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500&display=swap" rel="stylesheet">
     <!-- login icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
     <!-- Bootstrap -->
@@ -45,7 +34,7 @@ if($status==false) {
     <link rel="stylesheet" href="css/style.css">
     <!-- pagenation.js -->
     <link rel="stylesheet" href="./node_modules/paginationjs/dist/pagination.css"><!-- 後で -->
-    <title>あなたと百物語 | 管理画面</title>
+    <title>あなたと百物語 | 管理画面「語り」</title>
 </head>
 <body class="body">
     <?php 
@@ -127,7 +116,7 @@ let datas = JSON.parse('<?= $php_json?>')
 
 // [2] pagination.jsの設定
 $(function() {
-    $('#datas-all-pager').pagination({ // diary-all-pagerにページャーを埋め込む
+    $('#datas-all-pager').pagination({
         dataSource: datas,
         pageSize: 20, // 1ページあたりの表示数
         prevText: ' &nbsp; &lt; 前へ &nbsp; ',
@@ -144,7 +133,7 @@ $(function() {
                     '<th class="pl-2 bg-dark">Status ※</th>'+        
                     '<th class="pl-2 bg-dark">Status変更</th>'+        
                 '</tr>'
-            $('#datas-all-contents').html(thFormat + template(data)); // diary-all-contentsにコン
+            $('#datas-all-contents').html(thFormat + template(data));
             $('body,html').animate({scrollTop:0}, 400, 'swing');
         }
     });
@@ -166,9 +155,7 @@ function template(dataArray) {
             '</tr>'
     })
 }
-
 </script>
-
 
 </body>
 </html>

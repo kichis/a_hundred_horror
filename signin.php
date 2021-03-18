@@ -1,12 +1,7 @@
-<!-- デザインはあとで -->
-
 <?php 
-// ini_set('display_errors', 1);
-
 session_start();
 require("db_connection.php");
 include("funcs.php");
-
 
 // 以下、フォームに入力した値のバリデーション
 
@@ -29,12 +24,10 @@ $_SESSION["signinErrorMsg"] = '';
 if(isset($uname)){
     foreach($infos as $key => $value){
         $valiFlg = isFilled($key, $value, $valiFlg); // 4
-        // echo $key . "のブランクis" .$valiFlg;
         $valiFlg = checkInputLength($key, $value, $valiFlg); // 4
     }
     $valiFlg = checkCorrectEmail($email, $confemail, $valiFlg); // 1
     
-    // dbへ接続
     $pdo = db_conn();
     $valiFlg = checkSameRecord($pdo, 'user_name', $uname, 'このお名前は使用できません(すでに登録があります)', $valiFlg); // 1
     $valiFlg = checkSameRecord($pdo, 'email', $email, 'このEmailは使用できません(すでに登録があります)', $valiFlg); // 1
@@ -50,33 +43,24 @@ if(isset($uname)){
 
 if($valiFlg == 14){
     // dbへ登録する処理へ
-    echo "入力完璧！";
     $_SESSION["uname"] = $uname;
     $_SESSION["email"] = $email;
     $_SESSION["passw"] = $passw;
     redirect("signin_act.php");
 }
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- デザインはあとで -->
     <!-- base font -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500&display=swap" rel="stylesheet">
-    <!-- specific font -->
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&display=swap" rel="stylesheet"> -->
-
     <!-- Bootstrap only -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> 
     <link rel="stylesheet" href="css/style.css">
-    <title>あなたと百物語 ｜語り手登録</title>
-
+    <title>あなたと百物語 ｜ 「語り手」登録</title>
 </head>
 
 <body class="body">
@@ -122,7 +106,6 @@ if($valiFlg == 14){
 
     <?php include("copyright.php"); ?>
 
-<!-- JS, Popper.js, and jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>

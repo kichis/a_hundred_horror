@@ -25,7 +25,6 @@ $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
 $stmt->bindValue(':comm', $comment, PDO::PARAM_STR);
 $status = $stmt->execute();
 
-// 成功したら元のページに戻る
 if($status==false) {
   sql_error($stmt);
 }else{ 

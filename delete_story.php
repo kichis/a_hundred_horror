@@ -1,6 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-
 // 「語り」を削除する
 
 session_start();
@@ -25,5 +23,4 @@ if($status==false){
 }else{
   redirect("mystories.php");
 }
-
 ?>

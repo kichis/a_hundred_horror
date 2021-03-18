@@ -9,7 +9,6 @@ ss_chg();
 avoid();
 
 $user_id = $_SESSION["user_id"];
-
 $uname = $_SESSION["uname"];
 $email = $_SESSION["email"];
 $passwRev = password_hash($_SESSION["passwRev"], PASSWORD_DEFAULT);
@@ -28,12 +27,10 @@ $status = $stmt->execute();
 if($status==false){
     sql_error($stmt);
 }else{
-    // echo "update done!";
     $_SESSION["uname"] = "";
     $_SESSION["email"] = "";
     $_SESSION["passwRev"] = "";
     $_SESSION["passwFlg"] = "";
     redirect("edit_myaccount.php");
 }
-
 ?>

@@ -1,5 +1,5 @@
 <?php
-// 怖評価を+1する
+// 怖ポイントを+1する
 
 session_start();
 require("db_connection.php");
@@ -11,7 +11,6 @@ avoid();
 $story_id = $_GET["story_id"];
 $user_id = $_GET["user_id"];
 
-// db接続,sql文
 $pdo = db_conn();
 $sql = "UPDATE stories SET num_horror = num_horror +1 WHERE story_id = :id;
 INSERT INTO horrors(story_id, user_id) VALUES(:id, :user_id) ";

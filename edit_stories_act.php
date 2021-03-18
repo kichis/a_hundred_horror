@@ -1,6 +1,5 @@
 <?php 
 // admin権限で、ストーリーの表示、非表示を切り替える
-ini_set('display_errors', 1);
 
 session_start();
 require("db_connection.php");
@@ -27,6 +26,6 @@ if($status==false){
     redirect("stories.php");
 }
 
-// MEMO: 下記のSQL文だと、$story_idと$statusRevの一つ目の要素しか実行されないが、エラーにもならない(PDO::PARAM_部分は省略)
+// MEMO: 下記のSQL文だと、$story_idと$statusRevの一つ目の要素しか実行されない、しかし、エラーにもならない(PDO::PARAM_部分は省略)。2つ目以降が認知されていない模様。
 // $sql = "UPDATE stories SET status = ELT(FIELD(story_id, :story_ids), :statusRevs) WHERE story_id IN (:story_idst)";
 ?>

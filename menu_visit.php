@@ -1,9 +1,5 @@
-<!-- デザイン -->
-<!-- 入室するを真ん中にする？？（現状、少しずれている） -->
-
 <!DOCTYPE html>
 <html lang="ja">
-
 <body>
     <nav class="navbar navbar-expand-lg">
         <a href="home.php" class="m-3"><h1>あなたと百物語</h1></a>

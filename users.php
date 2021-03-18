@@ -1,8 +1,4 @@
-<!-- デザインはあとで -->
-
 <?php 
-// ini_set('display_errors', 1);
-
 session_start();
 require("db_connection.php");
 include("funcs.php");
@@ -10,7 +6,6 @@ include("funcs.php");
 ss_chg();
 avoidUser();
 
-// 全ユーザ情報取得
 $pdo = db_conn();
 $sql = "SELECT * FROM users ORDER BY user_id ASC;";
 $stmt = $pdo->prepare($sql);
@@ -61,9 +56,6 @@ if(isset($uname)){
         
     }
 
-    // echo $valiFlg;
-    // echo $_SESSION["signinErrorMsg"];
-
     // 全てのバリデーションを通過できたらdbにupdate(通過できない項目があれば、#errorMsgにメッセージ表示)
     if($valiFlg == 0){
         $_SESSION["edited_uname"] = $uname;
@@ -75,19 +67,13 @@ if(isset($uname)){
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- スタイルはあとで -->
-<!-- base font -->
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500&display=swap" rel="stylesheet">
-<!-- specific font -->
-<!-- <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&display=swap" rel="stylesheet"> -->
-
+    <!-- base font -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500&display=swap" rel="stylesheet">
     <!-- login icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
     <!-- Bootstrap -->
@@ -95,8 +81,7 @@ if(isset($uname)){
     <link rel="stylesheet" href="css/style.css">
     <!-- pagenation.js -->
     <link rel="stylesheet" href="./node_modules/paginationjs/dist/pagination.css">
-
-    <title>あなたと百物語 | 管理画面</title>
+    <title>あなたと百物語 | 管理画面「語り手」</title>
 </head>
 <body class="body">
     <?php 
@@ -166,10 +151,7 @@ $(function() {
             if(checkbox.prop('checked')){
                 // checked
                 unameCol.html('<input type="text" name="edited_uname[]" maxlength="100" minlength="3" class="form-control" required value="' + result["user_name"] + '">')
-                // unameCol.html('<input type="text" name="edited_uname[]" maxlength="100" class="form-control" value="' + result["user_name"] + '">')
                 emailCol.html('<input type="email" name="edited_email[]" maxlength="255" minlength="3" class="form-control" required value="'+ result["email"] +'">')
-                // emailCol.html('<input type="text" name="edited_email[]" maxlength="255" class="form-control" value="'+ result["email"] +'">')
-
                 statusCol.html('<select name="edited_status[]" class="form-select form-select-sm form-control" id="edited_status_'+ user_id + '">'+  
                         '<option value="0">0:退会済み</option>'+
                         '<option value="1">1:登録ユーザー</option>'+
@@ -177,7 +159,6 @@ $(function() {
                         '<option value="3">3:ブラックリストユーザー</option>'+
                     '</select>')
                 $('#edited_status_' + user_id + ' option[value='+ result["user_status"] + ']').prop('selected', true)
-
             }else{
                 // unchecked
                 unameCol.text(result["user_name"])
@@ -215,14 +196,13 @@ $(function() {
 
     // [2] pagination.jsの設定
     $(function() {
-        $('#datas-all-pager').pagination({ // diary-all-pagerにページャーを埋め込む
+        $('#datas-all-pager').pagination({
             dataSource: datas,
             pageSize: 10, // 1ページあたりの表示数
             prevText: ' &nbsp; &lt; 前へ &nbsp; ',
             nextText: ' &nbsp; 次へ &gt; &nbsp;',
             // ページがめくられた時に呼ばれる
             callback: function(data, pagination) {
-                // dataの中に次に表示すべきデータが入っているので、html要素に変換
                 const thFormat = '<tr>'+
                         '<th class="pl-4 bg-dark">user_id</th>'+
                         '<th class="pl-2 bg-dark">ユーザ名</th>'+
@@ -230,11 +210,12 @@ $(function() {
                         '<th class="pl-2 bg-dark">ユーザステータス ※</th>'+               
                         '<th class="pl-2 bg-dark">内容を変更</th>'+                     
                     '</tr>'
-                $('#datas-all-contents').html(thFormat + template(data)); // diary-all-contentsにコン
+                $('#datas-all-contents').html(thFormat + template(data));
                 $('body,html').animate({scrollTop:0}, 400, 'swing');
             }
         });
     });
+    
     // [3] データ1つ1つをhtml要素に変換する
     function template(dataArray) {
         return dataArray.map(function(data) {

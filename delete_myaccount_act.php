@@ -1,5 +1,5 @@
-<?php 
-// ini_set('display_errors', 1);
+<?php
+// ユーザ自身が登録情報を削除する
 
 session_start();
 require("db_connection.php");
@@ -11,7 +11,6 @@ avoid();
 $user_id = $_POST["user_id"];
 
 $pdo = db_conn();
-
 $sql = "UPDATE users SET user_status = 0 WHERE user_id = :user_id";
 $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);

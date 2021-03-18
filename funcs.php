@@ -184,8 +184,8 @@ function checkSameRecordExptMe($pdo, $col, $data, $user_id, $comment, $valiFlg){
     if($status == false) sql_error($stmt);
     $val = $stmt->fetch();
     if(!$val){
+        $valiFlg += 1;
     }else{
-        $valiFlg -= 1;
         $_SESSION["signinErrorMsg"] .= $comment. "<br>";
     }
     return $valiFlg;

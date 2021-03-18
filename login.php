@@ -61,7 +61,7 @@ include("funcs.php");
 <script>
     var oldUrl = document.referrer;
 // デプロイ前に要書き換え！
-    if(oldUrl == "http://localhost/a_hundred_horror/login.php"){
+    if(oldUrl == "http://kichis.sakura.ne.jp/a_hundred_horror/login.php"){
         var msg = document.querySelector("#error_msg")
         msg.innerHTML = "! ログイン情報が間違っています !"
     }

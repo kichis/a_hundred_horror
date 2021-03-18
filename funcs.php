@@ -17,7 +17,7 @@ function redirect($file_name){
     exit();
 }
 
-// 以下、アクセス権限関係 //
+// ==== アクセス権限関係 ==== //
 
 // ログインしたユーザならsession_idを変更する
 function ss_chg(){
@@ -53,9 +53,7 @@ function avoidNonAuthor($pdo, $story_id, $user_id){
     $author = $stmt->fetch();
     if($author["user_id"] != $user_id){
         redirect("home.php");
-    }else{
-        // 何もせずに終了
-    }
+    }else{}
 }
 
 // 簡単なバリデーション(空欄?制限文字数以内?)
@@ -67,7 +65,7 @@ function isFilledLimited($content, $max){
     }
 }
 
-// 以下、signin用バリデーション //
+// ==== バリデーション ==== //
 
 // 空欄ではないか
 function isFilled($key, $value, $valiFlg){
@@ -78,6 +76,7 @@ function isFilled($key, $value, $valiFlg){
     }
     return $valiFlg;
 }
+
 // 空欄ではないか(users.phpのバリデーション用)
 function isFilledArray($id, $value, $colum, $id_list, $valiFlg){
     if(empty($value)){
@@ -119,6 +118,7 @@ function checkInputLength($key, $value, $valiFlg){
     }
     return $valiFlg;
 }
+
 // 文字数制限内か(users.phpのバリデーション用)
 function checkInputLengthArray($id, $value, $colum, $id_list, $valiFlg){
     $max;
@@ -145,7 +145,6 @@ function checkInputLengthArray($id, $value, $colum, $id_list, $valiFlg){
 }
 
 function checkCorrectEmail($email, $confemail, $valiFlg){
-    // Emailが確認用Emailの入力と合っているか
     if($email != $confemail){
         $_SESSION["signinErrorMsg"] .= "２つのEmailの入力が異なっています<br>";
     // メールアドレスは正しい形式か（半角英数・記号に限る、@必要、＠以降に文字列必要）
@@ -173,6 +172,7 @@ function checkSameRecord($pdo, $col, $data, $comment, $valiFlg){
     }
     return $valiFlg;
 }
+
 // 同じ登録があるか(自分の登録以外で)
 function checkSameRecordExptMe($pdo, $col, $data, $user_id, $comment, $valiFlg){
     // HACK:本来はSQLに直接変数を埋め込むべきでないが、ユーザが入力できる変数でないので、コード内の可用性を考慮してこの形とする
@@ -190,6 +190,7 @@ function checkSameRecordExptMe($pdo, $col, $data, $user_id, $comment, $valiFlg){
     }
     return $valiFlg;
 }
+
 // 同じ登録があるか(自分の登録以外で)(users.phpのバリデーション用)
 function checkSameRecordExptMeArray($pdo, $col, $data, $user_id, $comment, $valiFlg){
     // HACK:本来はSQLに直接変数を埋め込むべきでないが、ユーザが入力できる変数でないので、コード内の可用性を考慮してこの形とする
@@ -219,6 +220,7 @@ function checkMatchPattern($pattern, $data, $which, $valiFlg){
     }
     return $valiFlg;
 }
+
 // 規定の形式(文字種類)に適合しているか(users.phpのバリデーション用)
 function checkMatchPatternArray($pattern, $data, $comment, $valiFlg){
     // 規定の形式にマッチすれば1、しなければ0(エラーはfalse)
@@ -231,7 +233,7 @@ function checkMatchPatternArray($pattern, $data, $comment, $valiFlg){
     return $valiFlg;
 }
 
-// 以下、story.php
+// ==== その他 ==== //
 
 // ユーザが怖ボタンを押下済みか
 function hasPushed($pdo, $story_id, $user_id){
@@ -255,7 +257,6 @@ function getComment($pdo, $story_id){
     $stmt = $pdo->prepare($sql);
     $stmt->bindValue(':story_id', $story_id, PDO::PARAM_INT);
     $status = $stmt->execute();
-
     if($status==false) {
         sql_error($stmt);
     }else{
@@ -266,5 +267,4 @@ function getComment($pdo, $story_id){
         return $view;
     }
 }
-
 ?>

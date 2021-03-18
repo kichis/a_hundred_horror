@@ -1,5 +1,3 @@
-<!-- デザインはあとで -->
-
 <?php
 // ini_set('display_errors', 1);
 
@@ -7,10 +5,7 @@ session_start();
 require("db_connection.php");
 include("funcs.php");
 
-// dbへ接続
 $pdo = db_conn();
-
-// 語り情報取得（新しい順に表示）
 $sql = "SELECT stories.story_id AS story_id, stories.title AS title, users.user_name AS user, stories.user_id AS user_id, stories.date AS `date`, stories.num_horror AS horror 
 FROM stories INNER JOIN users ON stories.user_id = users.user_id 
 WHERE status = 1 AND user_status != 3 ORDER BY story_id DESC";
@@ -26,13 +21,8 @@ $php_json = json_encode($r);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-<!-- スタイルはあとで -->
     <!-- base font -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500&display=swap" rel="stylesheet">
-    <!-- specific font -->
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&display=swap" rel="stylesheet"> -->
-    
     <!-- highlight font -->
     <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Gothic&display=swap" rel="stylesheet">
     <!-- login icon -->
@@ -42,7 +32,6 @@ $php_json = json_encode($r);
     <link rel="stylesheet" href="css/style.css">
     <!-- pagenation.js -->
     <link rel="stylesheet" href="./node_modules/paginationjs/dist/pagination.css"><!-- 後で -->
-
     <title>あなたと百物語</title>
 </head>
 <body class="body">
@@ -71,20 +60,18 @@ $php_json = json_encode($r);
         </div>
     </div>
 
-
     <div id="storyArea" class="mt-5 mx-auto">
         <div id="under"></div>
         <div id="over">
             <ul>
-                <div id="datas-all-contents"></div><!-- コンテンツの埋め込み先をid指定 -->
+                <div id="datas-all-contents"></div>
             </ul>
-            <div class="pager d-flex justify-content-center mt-4" id="datas-all-pager"></div><!-- ページャーの埋め込み先をid指定 -->
+            <div class="pager d-flex justify-content-center mt-4" id="datas-all-pager"></div>
         </div>
     </div>
 
     <?php include("copyright.php"); ?>
 
-<!-- Bootstrap -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
@@ -95,13 +82,14 @@ $php_json = json_encode($r);
     <script src="./node_modules/paginationjs/dist/pagination.js"></script>
 
     <script>
+    // ページネーション
     // [1] 配列のデータを用意  注意!! datasをHTML出力する場合は、sani()を使ってサニタイズすること !!
     let datas = JSON.parse('<?= $php_json?>')
 
     // [2] pagination.jsの設定
     let counter = 0
     $(function() {
-        $('#datas-all-pager').pagination({ // diary-all-pagerにページャーを埋め込む
+        $('#datas-all-pager').pagination({
             dataSource: datas,
             pageSize: 10, // 1ページあたりの表示数
             prevText: ' &nbsp; &lt; 前へ &nbsp; ',
@@ -109,7 +97,7 @@ $php_json = json_encode($r);
             // ページがめくられた時に呼ばれる
             callback: function(data, pagination) {
                 // dataの中に次に表示すべきデータが入っているので、html要素に変換
-                $('#datas-all-contents').html(template(data)); // diary-all-contentsにコンテンツを埋め込む
+                $('#datas-all-contents').html(template(data));
                 // HACK:初回ロード時にscrollTopが呼ばれないようにするためのif文(良い実装ではないが、clickイベントがページネーションボタンで感知できなかったため仕方なし)
                 if(counter > 0){
                     var position = $('#storyArea').offset().top;

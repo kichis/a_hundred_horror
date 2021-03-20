@@ -36,7 +36,7 @@
 - \[ ]内はデフォルト値
 画像
 - tags, tag_kinds
-<img width="786" alt="スクリーンショット 2021-03-20 18 05 41" src="https://user-images.githubusercontent.com/64632997/111866218-e5540f80-89a6-11eb-9afa-9a1a154bd407.png">
+<img width="786" alt="スクリーンショット 2021-03-20 18 07 03" src="https://user-images.githubusercontent.com/64632997/111866218-e5540f80-89a6-11eb-9afa-9a1a154bd407.png">
 テーブルは作成したものの、機能を実装せず。
 
 ## 体験用アカウント

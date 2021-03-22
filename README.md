@@ -4,7 +4,7 @@
   ユーザ登録すれば、投稿された怪談に対して「怖！」ボタンを押したり、コメントを書くことも可能。ちょっとした仕掛けもあります。  
 - 2020.06に製作した『あなたと百物語(kichis/Gs_php_final)』のリファクタリングver.
 - 2020ver.には無かった、ユーザ登録・ログイン時のバリデーション機能やユーザ情報の編集機能の実装(詳細は下記)。
-- 実際のサイトは[こちら](http://kichis.sakura.ne.jp/a_hundred_horror/index.php)より。(ログインする場合は下記の"体験用アカウント"をご利用ください)
+- 実際のサイトは[こちら](http://kichis.sakura.ne.jp/a_hundred_horror/index.php target="_blank")より。(ログインする場合は下記の"体験用アカウント"をご利用ください)
 
 ## 目次
 1. [体験用アカウント](#体験用アカウント)
@@ -45,7 +45,7 @@ email:
 - 主キーは１行目、青字
 - 依存関係や親子は区別せず
 - \[ ]内はデフォルト値
-<img width="786" alt="DBのER図" src="https://user-images.githubusercontent.com/64632997/111866278-4a0f6a00-89a7-11eb-881a-9962adc711f4.png" target="_blank">
+<img width="786" alt="DBのER図" src="https://user-images.githubusercontent.com/64632997/111866278-4a0f6a00-89a7-11eb-881a-9962adc711f4.png">
 - tags, tag_kindsテーブルは作成したものの、機能実装せず。
 
 ## 実装したこと( = 2020ver.からの進化 )

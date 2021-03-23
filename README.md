@@ -3,8 +3,8 @@
 : 怪談を読んだり、投稿したりできるウェブサイト。  
   ユーザ登録すれば、投稿された怪談に対して「怖！」ボタンを押したり、コメントを書くことも可能。ちょっとした仕掛けもあります。  
 - 2020.06に製作した『あなたと百物語(kichis/Gs_php_final)』のリファクタリングver.
-- 2020ver.には無かった、ユーザ登録・ログイン時のバリデーション機能やユーザ情報の編集機能の実装(詳細は下記)。
-- 実際のサイトは[こちら](http://kichis.sakura.ne.jp/a_hundred_horror/index.php")より。(ログインする場合は下記の"体験用アカウント"をご利用ください)
+- 2020ver.には無かった、ユーザ登録時のバリデーションやユーザ情報の編集機能..etcを実装(詳細は下記"")。
+- 実際のサイトは[こちら](http://kichis.sakura.ne.jp/a_hundred_horror/index.php")より。(ログインする場合は下記"体験用アカウント"をご利用ください)
 
 ## 目次
 1. [体験用アカウント](#体験用アカウント)
@@ -22,15 +22,15 @@
 4. 今後の課題
 
 ## 体験用アカウント
-__通常ユーザ__
-email: test_user@ghost.com
-パスワード: testuser
-__管理者__
-email: admin_user@ghost.com
-パスワード: adminuser
-__ブラックリストユーザ__ ←おすすめです！  
-email: blacklisted@ghost.com
-パスワード: blacklisted
+1. __通常ユーザ__  
+email: test_user@ghost.com  
+パスワード: testuser  
+1. __管理者__  
+email: admin_user@ghost.com  
+パスワード: adminuser  
+1. __ブラックリストユーザ__ ←おすすめです！  
+email: blacklisted@ghost.com  
+パスワード: blacklisted  
 
 ## 使用技術
 - HTML5

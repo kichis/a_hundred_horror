@@ -164,13 +164,15 @@ __PHP & JS__
 - JS -> PHP : ajaxなどを使用する。  
 
 ブラウザの履歴
-- login.php -> login_act.php(ログイン失敗) -> login.php に戻ってきたとき、JS"document.referrer(=現ページに遷移する前のページ)" = login.php   
-  why? : "document.referrer"はJS(ブラウザ)で感知できる範囲の履歴と思われる。  
-         login_act.phpはブラウザに渡すべきHTMLがなく、サーバサイドで処理が完結する。
-         よって、ブラウザ側に渡されるHTMLの履歴は現login.phpの前は、(login_act.phpの前の)login.php。  
-  1. {PHP}login.php : HTMLをブラウザに渡す -> <u>{ブラウザ} HTML受け取る</u> -> {ユーザ} ログイン情報を入力 -> 2.
+- login.php -> login_act.php(ログイン失敗) -> login.php に戻ってきたとき、  
+  JS"document.referrer(=現ページに遷移する前のページ)" = login.php   
+  何故こうなるのか? : "document.referrer"はJS(ブラウザ)で感知できる範囲の履歴と思われる。  
+                  login_act.phpはブラウザに渡すべきHTMLがなく、サーバサイドで処理が完結する。  
+                  よって、ブラウザ側に渡されるHTMLの履歴は現login.phpの前は、(login_act.phpの前の)login.php。  
+  1. {PHP}login.php : HTMLをブラウザに渡す -> <u>{ブラウザ} HTML受け取る</u> -> {ユーザ} ログイン情報を入力 -> ii.へ
   1. {PHP}login_act.php : login.phpからのログイン情報を処理(ブラウザ側には何も渡さない)
-  1. {PHP}login.php : HTMLをブラウザに渡す -> <u>{ブラウザ} HTML受け取る</u> (ここで遷移履歴をみると、”document.referrer” = login.php)
+  1. {PHP}login.php : HTMLをブラウザに渡す -> <u>{ブラウザ} HTML受け取る</u>  
+                      (ここで遷移履歴をみると、”document.referrer” = login.php)
 
 __JS__  
 イベントハンドラ

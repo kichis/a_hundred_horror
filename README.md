@@ -195,7 +195,7 @@ __mySQL__
 - __UPDATE文は(1回で複数文送信しても)UPDATE1回の処理のたびに通信が発生する__  
 　(予想:共有ロックでなくて専有ロックだから？)
 - bulk update : 複数のレコードを一度にUPDATEすること
-- `ELT(1, "Tokto", "Osaka") // "Tokto" `   第一引数=n番目にある要素を返す  
+- `ELT(1, "Tokto", "Osaka") // "Tokto" `   第一引数 = n番目にある要素を返す  
 - `FIELD("大阪", "東京", "大阪")  // 2 `   第一引数を検索してn番目にあるかを返す
 
 __HTML__
@@ -203,16 +203,19 @@ __HTML__
 - __formタグはtableタグの内側に記述すると動的レンダリングしたフォームの値がPOSTできないので、tableタグの外側に記述すること！！！__  
 
 __CSS__
-- hover: カーソルが重なっている
-- focus: 選択されている(tabを使って選択した場合も含む)  
+- hover : カーソルが重なっている
+- focus : 選択されている(tabを使って選択した場合も含む)  
  
 __XSSについてまとめ__  
 PHP  
 - script入りの文字列 + var_dump() -> scriptが実行される (__危険！__)
-- json_encode(script入りの文字列) + var_dump -> scriptとしてHTMLに反映されるがなぜか実行はされない (たぶん危険)  
+- json_encode(script入りの文字列) + var_dump -> scriptとしてHTMLに反映されるがなぜか実行はされない (たぶん危険?)  
+
 JS    
-- json_encode(script入りの文字列) -> JSON.parse() -> HTMLに挿入 -> scriptとしてHTMLに反映されるがなぜか実行はされない (たぶん危険)
-- json_encode(script入りの文字列) -> JSON.parse() -> サニタイズ(危険な文字をエスケープ) -> HTMLに挿入 -> scriptではなく文字列としてHTMLに反映される (__安全__)  
+- json_encode(script入りの文字列) -> JSON.parse() -> HTMLに挿入  
+  -> scriptとしてHTMLに反映されるがなぜか実行はされない (たぶん危険?)
+- json_encode(script入りの文字列) -> JSON.parse() -> サニタイズ(危険な文字をエスケープ) -> HTMLに挿入  
+  -> scriptではなく文字列としてHTMLに反映される (__安全__)  
 
 __OTHER__
 - UTF-8は、1文字あたり1~4byte   

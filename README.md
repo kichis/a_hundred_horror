@@ -80,7 +80,7 @@ email: blacklisted@ghost.com
 1. 軽微な入力ミス防止にHTMLタグの属性を使用
 1. HTMLタグ属性では検証できない項目に加え、検証した(はずの)項目も二重にPHPで検証。
 (このバリデーションはJSでも可能(かつ都合がいい)と思われるが、"HTMLやJSでのバリデーションは突破できるのでサーバ側で行うべき"という[意見][1]を見たことと、PHPの習熟を目的としているので今回はこの方針とする。)
-[1](https://www.webdesignleaves.com/pr/php/php_basic_06.php)  
+[1]:https://www.webdesignleaves.com/pr/php/php_basic_06.php  
 1. XSS対策はHTML出力時に行う。
 
 ---

@@ -9,7 +9,7 @@
 ## 目次
 1. [体験用アカウント](#体験用アカウント)
 1. [使用技術](#使用技術)
-1. [DB設計(ER図)](#DB設計(ER図))
+1. [DB設計(ER図)](#DB設計)
 2. [おすすめポイント](#おすすめポイント)
 3. [実装したこと( = 2020ver.からの進化 )](#実装したこと\( = 2020ver.からの進化 \))
 4. [実装できなかったこと(しなかったこと)](#実装できなかったこと(しなかったこと))
@@ -22,13 +22,13 @@
 4. 今後の課題
 
 ## 体験用アカウント
-1. __通常ユーザ__  
+- __通常ユーザ__  
 email: test_user@ghost.com  
 パスワード: testuser  
-1. __管理者__  
+- __管理者__  
 email: admin_user@ghost.com  
 パスワード: adminuser  
-1. __ブラックリストユーザ__ ←おすすめです！  
+- __ブラックリストユーザ__ ←おすすめです！  
 email: blacklisted@ghost.com  
 パスワード: blacklisted  
 
@@ -37,11 +37,11 @@ email: blacklisted@ghost.com
 - CSS3
 - Bootstrap 4.5.0
 - jQuery 3.6.0
-- pagination.js 2.1.4 [参考サイト](https://qiita.com/hiroism/items/eee7a9eb0bd9539c30b2)
+- pagination.js 2.1.4 -> [参考サイト](https://qiita.com/hiroism/items/eee7a9eb0bd9539c30b2)
 - PHP 7.4.2
 - mySQL 5.7
 
-## DB設計(ER図)
+## DB設計 (ER図)
 注：
 - 主キーは１行目、青字
 - 依存関係や親子は区別せず

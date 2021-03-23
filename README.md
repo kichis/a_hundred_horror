@@ -23,14 +23,14 @@
 
 ## 体験用アカウント
 __通常ユーザ__
-email:  
-パスワード:  
+email: test_user@ghost.com
+パスワード: testuser
 __管理者__
-email:  
-パスワード:  
+email: admin_user@ghost.com
+パスワード: adminuser
 __ブラックリストユーザ__ ←おすすめです！  
-email:  
-パスワード:
+email: blacklisted@ghost.com
+パスワード: blacklisted
 
 ## 使用技術
 - HTML5

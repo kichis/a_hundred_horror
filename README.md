@@ -156,9 +156,10 @@ DBに渡すSQL
 
 __PHP & JS__  
 値渡し  
-- PHP -> JS : &lt;script&gt;内にPHPの記述をするだけ。簡単。 
+- PHP -> JS : &lt;script&gt;内にPHPの記述をするだけ。簡単。  
               (配列の場合)PHP配列をjson_encode() -> JS変数にJSON.parse()  
-              ※この場合でもXSS可能なのでサニタイズの必要あり。JSではXSS対応のためのメソッドがないので、replace + 正規表現などでエスケープする。   
+              ※この場合でもXSS可能なのでサニタイズの必要あり。  
+               JSではXSS対応のためのメソッドがないので、replace + 正規表現などでエスケープする。   
                本アプリでは、[こちら](http://senoway.hatenablog.com/entry/2013/05/31/235051)を参考にしてサニタイズ関数を作成した。  
 - JS -> PHP : ajaxなどを使用する。  
 

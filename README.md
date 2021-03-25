@@ -46,9 +46,6 @@ tags, tag_kindsテーブルは作成したものの、機能実装せず。
 - __通常ユーザ__  
 email: test_user@ghost.com  
 パスワード: testuser  
-- __管理者__  
-email: admin_user@ghost.com  
-パスワード: adminuser  
 - __ブラックリストユーザ__ ←おすすめです！   
 email: blacklisted@ghost.com  
 パスワード: blacklisted  

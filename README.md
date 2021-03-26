@@ -53,7 +53,7 @@ email: blacklisted@ghost.com
 ## おすすめポイント
 :ghost: 感じた恐怖を投稿者に伝えられる「怖！」ボタン  
 :ghost: __隠しページに遷移するリンク__(画面下方、copyrightsのあたり)  
-:ghost: 悪質なブラックリストユーザを驚かせる __ドッキリイベント__  
+:ghost: 悪質なブラックリストユーザを驚かせる __ドッキリイベント__   (※Safariでは動作しません。Google Chrome/Brave Browserでは動作確認済み。)
 :ghost: ホラーな雰囲気を醸し出すデザイン  
 
 ## 実装したこと

@@ -109,6 +109,7 @@ if(isset($uname)){
             </p>
             <form method="post" action="users.php">
                 <table class="table text-danger" id="datas-all-contents"></table>
+                <button type="submit" class="btn btn-md bg-dark text-white border-white d-flex py-2 px-5 mt-5 mx-auto">変更を確定</button>
                 <div class="pager d-flex justify-content-center mt-5" id="datas-all-pager"></div>
                 <div class="w-25 ml-auto">
                     <p class="mb-2">※ ユーザステータス</p>
@@ -119,7 +120,6 @@ if(isset($uname)){
                         3: ブラックリストユーザー
                     </p>
                 </div>
-                <button type="submit" class="btn btn-md bg-dark text-white border-white d-flex py-2 px-5 mt-5 mx-auto">変更を確定</button>
             </form>
         </div>
         <div id="admin_bgimg"></div>

@@ -1,13 +1,23 @@
 <!DOCTYPE html>
 <html lang="ja">
 <body>
-    <nav class="navbar navbar-expand-lg">   
-        <a href="home.php" class="m-3 mr-5"><h1>あなたと百物語</h1></a>
+    <nav class="navbar navbar-expand-lg d-flex">   
+        <a href="home.php" class="navbar-brand m-3 mr-5"><h1>あなたと百物語</h1></a>
 
-        <div class="collapse navbar-collapse">
+         <div id="account_area" class="order-lg-2 ml-auto mr-2">
+                <p class="mb-1 pr-2 ">おや、<?= $_SESSION["user_name"]?>さん</p>
+                <button class="btn text-secondary font_sawarabi d-flex mr-2 ml-auto" onclick="scaringUser()">去る<i class="fas fa-door-open fa-lg"></i></button>
+        </div>
+
+        <button class="navbar-toggler bg-danger" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+            <!-- <span class="navbar-toggler-icon small">menu</span> -->
+            menu
+        </button>
+
+        <div id="navbarToggler" class="collapse navbar-collapse order-lg-1">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <button class="btn btn-md ml-5 m-4" onclick="alert('う')">わ</button>
+                    <button class="btn btn-md ml-4 ml-lg-5 m-4" onclick="alert('う')">わ</button>
                 </li>
                 <li class="nav-item">
                     <button class="btn btn-md m-4" onclick="alert('し')">る</button>
@@ -28,11 +38,6 @@
                     <button class="btn btn-md m-4" onclick="alert('よ')">だ</button>
                 </li>
             </ul>
-        </div>
-        
-        <div id="account_area">
-            <p class="mb-1 pr-2">おや、<?= $_SESSION["user_name"]?>さん</p>
-            <button class="btn text-secondary font_sawarabi d-flex mr-2 ml-auto" onclick="scaringUser()">去る<i class="fas fa-door-open fa-lg"></i></button>
         </div>
     </nav>
 

@@ -17,7 +17,7 @@
     background-image: url(../img/horror_woman.jpeg);
     background-size: 100% auto;
     background-position: 0% 21%;
-    background-color:rgba(0,0,0,0.5);
+    background-color:rgba(0,0,0,0.2);
     background-blend-mode: darken;
 }
 
@@ -74,6 +74,11 @@ nav a, .nav-item button{
 
 nav a:hover{
     text-decoration: none;
+}
+
+.navbar-toggler{
+    height: 8vh;
+    width: 80px;
 }
 
 #account_area{

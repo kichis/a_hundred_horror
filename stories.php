@@ -58,6 +58,7 @@ if($status==false) {
             <h3 class="text-center mb-5">「語り」一覧</h3>
             <form method="post" action="edit_stories_act.php" class="form-label">
                 <table class="table text-danger" id="datas-all-contents"></table>
+                <button type="submit" class="btn btn-md bg-dark text-white border-white d-flex py-2 px-5 mt-5 mx-auto">変更を確定</button>
                 <div class="pager d-flex justify-content-center mt-5" id="datas-all-pager"></div>
                 <div class="w-50 mx-auto mt-5">
                     <p class="mb-2">※ Status</p>
@@ -66,7 +67,6 @@ if($status==false) {
                         1: 表示(ブラックリストユーザーの「語り」はこの一覧では"1"として表示されますが、<br>実際のウェブサイト上には表示されません。)
                     </p>
                 </div>
-                <button type="submit" class="btn btn-md bg-dark text-white border-white d-flex py-2 px-5 mt-5 mx-auto">変更を確定</button>
             </form>
         </div>
         <div id="admin_bgimg"></div>
